@@ -1,0 +1,174 @@
+﻿@model SchedulerV3.ViewModel.TournamentViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Classes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Tournament Classes</h2>
+
+@Html.Partial("_TournamentSteps")
+
+
+<table class="table table-hover" id="classesTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Playing Dates</th>
+            <th>Number Of Rounds</th>
+            <th>Matches per round</th>
+            <th>Match duration</th>
+            <th>Break duration</th>
+            <th>Delete Class</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var klasa in Model.Tournament.Classes)
+        {
+            <tr>
+                <td>@klasa.Name</td>
+                <td>
+                    @foreach (var day in klasa.PlayingDates)
+                    {
+
+                        @day.Date.ToString("MMMM dd")
+                        <span>, </span>
+
+                    }
+                </td>
+                <td>@klasa.NumberOfRounds</td>
+                <td>@klasa.MatchesPerRound</td>
+                <td>@klasa.MatchDuration</td>
+                <td>@klasa.BreakBetweenMatches</td>
+                <td>
+                    <button>
+                        <span data-class-Id="@klasa.Id" class="glyphicon glyphicon-trash js-delete" aria-hidden="true"></span>
+
+                    </button>
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+
+
+
+
+
+@using (Html.BeginForm("AddClass", "Tournament", FormMethod.Post, new { @autocomplete = "off" }))
+{
+
+    @*<div class="form-group">
+
+            @Html.LabelFor(c => c.Class.Name)
+            @Html.TextBoxFor(c => c.Class.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(c => c.Class.Name)
+        </div>*@
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" , type="text" name="Class.Name" value="@Model.Class.Name" />
+        @Html.ValidationMessageFor(c => c.Class.Name)
+        
+    </div>
+
+
+    @*<div class='input-group'>
+            @Html.LabelFor(c => c.Class.NumberOfRounds)
+            @Html.TextBoxFor(c => c.Class.NumberOfRounds, new { @class = "form-control", @type = "text" })
+            @Html.ValidationMessageFor(c => c.Class.NumberOfRounds)
+        </div>*@
+
+    <div class="input-group">
+        <label>Number of rounds</label>
+        <input class="form-control" , type="text" name="Class.NumberOfRounds" value="@Model.Class.NumberOfRounds"/>
+        @Html.ValidationMessageFor(c => c.Class.NumberOfRounds)
+    </div>
+
+    @*<div class='input-group'>
+            @Html.LabelFor(c => c.Class.MatchesPerRound)
+            @Html.TextBoxFor(c => c.Class.MatchesPerRound, new { @class = "form-control", @type = "text" })
+            @Html.ValidationMessageFor(c => c.Class.MatchesPerRound)
+        </div>*@
+    <div class="input-group">
+        <label>Matches per round</label>
+        <input class="form-control" , type="text" name="Class.MatchesPerRound" value="@Model.Class.MatchesPerRound" />
+        @Html.ValidationMessageFor(c => c.Class.MatchesPerRound)
+    </div>
+
+
+    @*<div class='input-group'>
+            @Html.LabelFor(c => c.Class.MatchDuration)
+            @Html.TextBoxFor(c => c.Class.MatchDuration, new { @class = "form-control", @type = "text" })
+            @Html.ValidationMessageFor(c => c.Class.MatchDuration)
+        </div>*@
+    <div class="input-group">
+        <label>MatcheDuration</label>
+        <input class="form-control" , type="text" name="Class.MatchDuration" value="@Model.Class.MatchDuration" />
+        @Html.ValidationMessageFor(c => c.Class.MatchDuration)
+    </div>
+
+    @*<div class='input-group'>
+            @Html.LabelFor(c => c.Class.BreakBetweenMatches)
+            @Html.TextBoxFor(c => c.Class.BreakBetweenMatches, new { @class = "form-control", @type = "text" })
+        </div>*@
+    <div class="input-group">
+        <label>Break between matches</label>
+        <input class="form-control" , type="text" value="@Model.Class.BreakBetweenMatches" name="Class.BreakBetweenMatches" />
+        @Html.ValidationMessageFor(c => c.Class.BreakBetweenMatches)
+    </div>
+    
+
+    <br>
+    @*@Html.ListBoxFor(c => c.Class.ListOfPlayingDates, new SelectList(Model.AvailableDates()))*@
+    @*@Html.ListBoxFor(c => c.Class.PlayingDates, new SelectList(Model.AvailableDates(), new { @value=$"{Model.PlayingDatess()}" }))*@
+
+    <select id="Class_ListOfPlayingDates" multiple="multiple" name="Class.ListOfPlayingDates">
+        @for (int i = 0; i < Model.Tournament.AvailableDates().Count; i++)
+        {
+        <option value="@Model.Tournament.AvailableDates()[i]">@Model.Tournament.AvailableDates()[i]</option>
+        }
+    </select>
+
+    Model.Class.TournamentId = Model.Tournament.Id;
+    @Html.HiddenFor(c => c.Class.TournamentId)
+    <br>
+    <button type="submit" class="btn btn-primary">Add Class</button>
+
+
+
+    @section scripts
+        {
+        <script>
+            $(document).ready(function () {
+                $("#classesTable .js-delete").on("click", function () {
+                    if (confirm("Are you sure you want to delete this class")) {
+                        $.ajax({
+                            url: "/Api/Classes/" + $(this).attr("data-class-Id"),
+                            method: "DELETE",
+                            success: function () {
+                                console.log("Success");
+                            }
+                        });
+                    }
+                });
+            });
+
+
+        </script>
+
+
+    }
+
+
+}
+
+

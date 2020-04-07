@@ -1,0 +1,85 @@
+﻿@model SchedulerV3.ViewModel.TournamentViewModel
+@{
+    ViewBag.Title = "Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_TournamentSteps")
+
+<h2>Schedule Matches</h2>
+
+@using (Html.BeginForm("ScheduleMatches", "Tournament", FormMethod.Post))
+{
+    @Html.HiddenFor(c => Model.Tournament.Id)
+    <button type="submit">Schedule All</button>
+}
+
+@{
+    var tournament = Model.Tournament;
+    var playingDates = tournament.PlayingDates.ToList();
+    var listOfColor = new List<string>();
+    listOfColor.Add("#CD6155");
+    listOfColor.Add("#AF7AC5");
+    listOfColor.Add("#7FB3D5");
+    listOfColor.Add("#48C9B0");
+    listOfColor.Add("#F4D03F");
+    listOfColor.Add("#5D6D7E");
+
+
+
+
+}
+
+@foreach (var date in playingDates)
+{
+    var actualDateCourts = date.Courts.ToList();
+    <table class="table table-hover" id="classesTable">
+        @foreach (var court in actualDateCourts)
+        {
+            var actualCourtMatches = court.Matches.OrderBy(c => c.StartTime.TimeOfDay).ToList();
+            //actualCourtMatches.OrderBy(c => c.StartTime.TimeOfDay);
+            <thead>
+                <tr>
+                    @foreach (var match in actualCourtMatches)
+                    {
+                        if (!match.IsScheduled)
+                        {
+                            <th style="background-color: white">
+                                BREAK
+                            @match.StartTime.TimeOfDay
+                            @match.EndTime.TimeOfDay;
+                            
+                        </th>
+                    }
+                    else
+                    {
+                        var matchClassIndex = Model.Classes.IndexOf(match.Class);
+                        <th style="background-color: @(listOfColor[matchClassIndex])">
+                            @match.StartTime.TimeOfDay
+                            @match.Class.Name
+                            Rnd: @match.Round;
+                            Dur: @match.Class.MatchDuration
+                            Ind: @match.matchScheduleIndex
+                        </th>
+                    }
+
+
+                }
+
+                    @*<th>Name</th>
+        <th>Playing Dates</th>
+        <th>Number Of Rounds</th>
+        <th>Matches per round</th>
+        <th>Match duration</th>
+        <th>Break duration</th>
+        <th>Delete Class</th>*@
+                </tr>
+            </thead>
+        }
+
+    </table>
+}
+
+
+
+

@@ -1,0 +1,86 @@
+﻿@model  SchedulerV3.ViewModel.TournamentViewModel
+@{
+    ViewBag.Title = "Times";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title>Create Tournament</title>
+</head>
+
+<body>
+
+
+
+    <h2>Times</h2>
+
+    @Html.Partial("_TournamentSteps")
+
+    @using (Html.BeginForm("SaveTimes", "Tournament", FormMethod.Post, new { @autocomplete = "off" }))
+    {
+        int i = 0;
+        foreach (var date in Model.Tournament.PlayingDates)
+        {
+    <h3>Playing Date : @date.Date.ToString("dd/MM/yyyy")</h3>
+            <div class="input-group">
+                <label>Start Time</label>
+                <input type="text" name="Tournament.PlayingDates[@(i)].StartTime" class="form-control datetimepicker3" value="@date.StartTime.ToString("hh:mm tt")" />
+            </div>
+
+            <div class="input-group">
+                <label>End Time</label>
+                <input type="text" name="Tournament.PlayingDates[@(i)].EndTime" class="form-control datetimepicker3" value="@date.EndTime.ToString("hh:mm tt")" />
+            </div>
+
+            var ListOfCourtsInTN = @Model.Tournament.Courts.ToList();
+
+            <select id="Class_ListOfPlayingDates" multiple="multiple" name="Tournament.PlayingDates[@(i)].CourtIds">
+                @for (int j = 0; j < ListOfCourtsInTN.Count; j++)
+                {
+                    var courtId = @Model.Tournament.Courts.ToList()[j].Id;
+                    bool courtSelectedForActualPlayingDate = date.Courts.Select(x => x.Id).ToList().Contains(@courtId);
+                    var selected = "";
+                    if (courtSelectedForActualPlayingDate)
+                        selected = "selected";
+                    var gomce = "gomce";
+
+
+                <option @selected value="@courtId">@ListOfCourtsInTN[j].Name</option>
+                }
+            </select>
+
+            <input type="hidden" name="Tournament.PlayingDates[@(i)].Id" value="@date.Id" />
+
+
+            i++;
+            <hr />
+        }
+
+        <br>
+        <input type="hidden" name="Tournament.Id" value="@Model.Tournament.Id" />
+        <input autocomplete="off" name="hidden" type="text" style="display:none;">
+        <button type="submit" class="btn btn-primary">Save Times</button>
+    }
+
+
+    @section scripts
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css" />
+        <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                $('.datetimepicker3').datetimepicker({
+                    format: 'LT'
+                });
+            });
+        </script>
+
+    }
+</body>
+</html>

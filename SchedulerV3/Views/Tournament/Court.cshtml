@@ -1,0 +1,79 @@
+﻿@model SchedulerV3.ViewModel.TournamentViewModel
+@{
+    ViewBag.Title = "Court";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@Html.Partial("_TournamentSteps")
+
+<h2>Courts</h2>
+@if (Model.Tournament.Courts.Count != 0)
+{
+    <table class="table table-hover" id="CourtsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var court in Model.Tournament.Courts)
+            {
+                <tr>
+                    <td>@court.Name</td>
+                    <td>Edit</td>
+                    <td>
+                        <button>
+                            <span data-Courts-Id="@court.Id" class="glyphicon glyphicon-trash js-delete"></span>
+                        </button>
+
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+
+@using (Html.BeginForm("AddCourt", "Tournament", FormMethod.Post, new { @autocomplete = "off" }))
+{
+    @Html.LabelFor(c => c.Court.Name)
+    @Html.TextBoxFor(c => c.Court.Name, new { @class = "form-control" })
+
+
+
+    @Html.HiddenFor(c => c.Tournament.Id)
+
+    <br>
+    <button type="submit" class="btn btn-primary">Add</button>
+}
+
+
+@section scripts
+        {
+    <script>
+            $(document).ready(function () {
+                $("#CourtsTable .js-delete").on("click", function () {
+                    if (confirm("Are you sure you want to delete this court?")) {
+                        $.ajax({
+                            url: "/Api/Courts/" + $(this).attr("data-Courts-Id"),
+                            method: "DELETE",
+                            success: function () {
+                                console.log("Success");
+                            }
+                        });
+                    }
+                });
+            });
+
+
+    </script>
+
+    }
+
+

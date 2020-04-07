@@ -1,0 +1,10 @@
+﻿@model SchedulerV3.ViewModel.TournamentViewModel
+
+<ul class="list-inline">
+    <li>@Html.ActionLink("1.Edit", "Edit", new { id = Model.Tournament.Id })</li>
+    <li>@Html.ActionLink("2.Courts", "Court", new { id = Model.Tournament.Id })</li>
+    <li>@Html.ActionLink("3.Classes", "Class", new { id = Model.Tournament.Id })</li>
+    <li>@Html.ActionLink("4.Times", "Times", new { id = Model.Tournament.Id })</li>
+    <li>@Html.ActionLink("5.Schedule", "Schedule", new { id = Model.Tournament.Id })</li>
+
+</ul>

@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{59C97E01-C3F6-409D-B5A2-540E788444B9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SchedulerV3</RootNamespace>
+    <AssemblyName>SchedulerV3</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Itenso.TimePeriod, Version=2.1.1.0, Culture=neutral, PublicKeyToken=8cb6db75b4e81486, processorArchitecture=MSIL">
+      <HintPath>..\packages\TimePeriodLibrary.NET.2.1.1\lib\net46\Itenso.TimePeriod.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.4.0.0\lib\net451\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.0.0\lib\net451\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.0.0\lib\net451\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.0\lib\net451\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\MappingProfile.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\ClassesController.cs" />
+    <Compile Include="Controllers\Api\CourtsController.cs" />
+    <Compile Include="Controllers\Api\TournamentsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TournamentController.cs" />
+    <Compile Include="Dtos\CourtDto.cs" />
+    <Compile Include="Dtos\TournamentDto.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031433038_initial.cs" />
+    <Compile Include="Migrations\202003031433038_initial.Designer.cs">
+      <DependentUpon>202003031433038_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031435207_AddClassTable.cs" />
+    <Compile Include="Migrations\202003031435207_AddClassTable.Designer.cs">
+      <DependentUpon>202003031435207_AddClassTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031439439_AddTNTable.cs" />
+    <Compile Include="Migrations\202003031439439_AddTNTable.Designer.cs">
+      <DependentUpon>202003031439439_AddTNTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031542444_PlayingDatesTable.cs" />
+    <Compile Include="Migrations\202003031542444_PlayingDatesTable.Designer.cs">
+      <DependentUpon>202003031542444_PlayingDatesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031548019_WTF.cs" />
+    <Compile Include="Migrations\202003031548019_WTF.Designer.cs">
+      <DependentUpon>202003031548019_WTF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031616128_Datetime.cs" />
+    <Compile Include="Migrations\202003031616128_Datetime.Designer.cs">
+      <DependentUpon>202003031616128_Datetime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031632463_removeClassIdfromplayingdatesobject.cs" />
+    <Compile Include="Migrations\202003031632463_removeClassIdfromplayingdatesobject.Designer.cs">
+      <DependentUpon>202003031632463_removeClassIdfromplayingdatesobject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031658540_playingdatesAdded.cs" />
+    <Compile Include="Migrations\202003031658540_playingdatesAdded.Designer.cs">
+      <DependentUpon>202003031658540_playingdatesAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003040754591_ClassObjectPropUpdated.cs" />
+    <Compile Include="Migrations\202003040754591_ClassObjectPropUpdated.Designer.cs">
+      <DependentUpon>202003040754591_ClassObjectPropUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041411032_UpdatedModel1.cs" />
+    <Compile Include="Migrations\202003041411032_UpdatedModel1.Designer.cs">
+      <DependentUpon>202003041411032_UpdatedModel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003172211227_CourtModelAdded.cs" />
+    <Compile Include="Migrations\202003172211227_CourtModelAdded.Designer.cs">
+      <DependentUpon>202003172211227_CourtModelAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191058533_courtadded.cs" />
+    <Compile Include="Migrations\202003191058533_courtadded.Designer.cs">
+      <DependentUpon>202003191058533_courtadded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191121293_courtModified.cs" />
+    <Compile Include="Migrations\202003191121293_courtModified.Designer.cs">
+      <DependentUpon>202003191121293_courtModified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191133008_removeCourtModel.cs" />
+    <Compile Include="Migrations\202003191133008_removeCourtModel.Designer.cs">
+      <DependentUpon>202003191133008_removeCourtModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191133564_AddCourtModel.cs" />
+    <Compile Include="Migrations\202003191133564_AddCourtModel.Designer.cs">
+      <DependentUpon>202003191133564_AddCourtModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191141109_addfuckingcourt.cs" />
+    <Compile Include="Migrations\202003191141109_addfuckingcourt.Designer.cs">
+      <DependentUpon>202003191141109_addfuckingcourt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191143325_mokra.cs" />
+    <Compile Include="Migrations\202003191143325_mokra.Designer.cs">
+      <DependentUpon>202003191143325_mokra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191146496_courtFinaly.cs" />
+    <Compile Include="Migrations\202003191146496_courtFinaly.Designer.cs">
+      <DependentUpon>202003191146496_courtFinaly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191148419_court-playingdate-forgeinkey.cs" />
+    <Compile Include="Migrations\202003191148419_court-playingdate-forgeinkey.Designer.cs">
+      <DependentUpon>202003191148419_court-playingdate-forgeinkey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191150035_court-TN-forgeinkey.cs" />
+    <Compile Include="Migrations\202003191150035_court-TN-forgeinkey.Designer.cs">
+      <DependentUpon>202003191150035_court-TN-forgeinkey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191156460_court-TN-forgeinkey2.cs" />
+    <Compile Include="Migrations\202003191156460_court-TN-forgeinkey2.Designer.cs">
+      <DependentUpon>202003191156460_court-TN-forgeinkey2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191159513_deleted_court.cs" />
+    <Compile Include="Migrations\202003191159513_deleted_court.Designer.cs">
+      <DependentUpon>202003191159513_deleted_court.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191200423_add_court_again.cs" />
+    <Compile Include="Migrations\202003191200423_add_court_again.Designer.cs">
+      <DependentUpon>202003191200423_add_court_again.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191237528_miracle.cs" />
+    <Compile Include="Migrations\202003191237528_miracle.Designer.cs">
+      <DependentUpon>202003191237528_miracle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191241048_miracle3.cs" />
+    <Compile Include="Migrations\202003191241048_miracle3.Designer.cs">
+      <DependentUpon>202003191241048_miracle3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191309263_kola.cs" />
+    <Compile Include="Migrations\202003191309263_kola.Designer.cs">
+      <DependentUpon>202003191309263_kola.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191313029_kolagumikey.cs" />
+    <Compile Include="Migrations\202003191313029_kolagumikey.Designer.cs">
+      <DependentUpon>202003191313029_kolagumikey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191317184_bandazi.cs" />
+    <Compile Include="Migrations\202003191317184_bandazi.Designer.cs">
+      <DependentUpon>202003191317184_bandazi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191319391_court-TN.cs" />
+    <Compile Include="Migrations\202003191319391_court-TN.Designer.cs">
+      <DependentUpon>202003191319391_court-TN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191320055_court-TN2.cs" />
+    <Compile Include="Migrations\202003191320055_court-TN2.Designer.cs">
+      <DependentUpon>202003191320055_court-TN2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191322299_court-TN3.cs" />
+    <Compile Include="Migrations\202003191322299_court-TN3.Designer.cs">
+      <DependentUpon>202003191322299_court-TN3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191326596_ratkapna.cs" />
+    <Compile Include="Migrations\202003191326596_ratkapna.Designer.cs">
+      <DependentUpon>202003191326596_ratkapna.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191342531_bandazi-ratkapni.cs" />
+    <Compile Include="Migrations\202003191342531_bandazi-ratkapni.Designer.cs">
+      <DependentUpon>202003191342531_bandazi-ratkapni.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191348204_court-date.cs" />
+    <Compile Include="Migrations\202003191348204_court-date.Designer.cs">
+      <DependentUpon>202003191348204_court-date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191350010_carPartsRemovedFromModels.cs" />
+    <Compile Include="Migrations\202003191350010_carPartsRemovedFromModels.Designer.cs">
+      <DependentUpon>202003191350010_carPartsRemovedFromModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191514144_strange.cs" />
+    <Compile Include="Migrations\202003191514144_strange.Designer.cs">
+      <DependentUpon>202003191514144_strange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191557318_removeCourtFromTournament2.cs" />
+    <Compile Include="Migrations\202003191557318_removeCourtFromTournament2.Designer.cs">
+      <DependentUpon>202003191557318_removeCourtFromTournament2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191608316_removeCourtFromTournament3.cs" />
+    <Compile Include="Migrations\202003191608316_removeCourtFromTournament3.Designer.cs">
+      <DependentUpon>202003191608316_removeCourtFromTournament3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191610117_removeCourtFromTournament34.cs" />
+    <Compile Include="Migrations\202003191610117_removeCourtFromTournament34.Designer.cs">
+      <DependentUpon>202003191610117_removeCourtFromTournament34.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191611291_removeCourtFromTournament345.cs" />
+    <Compile Include="Migrations\202003191611291_removeCourtFromTournament345.Designer.cs">
+      <DependentUpon>202003191611291_removeCourtFromTournament345.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191614375_removeCourtFromTournament3456.cs" />
+    <Compile Include="Migrations\202003191614375_removeCourtFromTournament3456.Designer.cs">
+      <DependentUpon>202003191614375_removeCourtFromTournament3456.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191620514_wowo.cs" />
+    <Compile Include="Migrations\202003191620514_wowo.Designer.cs">
+      <DependentUpon>202003191620514_wowo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191622372_courtsadded.cs" />
+    <Compile Include="Migrations\202003191622372_courtsadded.Designer.cs">
+      <DependentUpon>202003191622372_courtsadded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003211339532_startEndTimeNullableInPlayingDatesModel.cs" />
+    <Compile Include="Migrations\202003211339532_startEndTimeNullableInPlayingDatesModel.Designer.cs">
+      <DependentUpon>202003211339532_startEndTimeNullableInPlayingDatesModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003231332076_playingdatesTNforgeinKey.cs" />
+    <Compile Include="Migrations\202003231332076_playingdatesTNforgeinKey.Designer.cs">
+      <DependentUpon>202003231332076_playingdatesTNforgeinKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003241553107_startEndTimeNotNullable.cs" />
+    <Compile Include="Migrations\202003241553107_startEndTimeNotNullable.Designer.cs">
+      <DependentUpon>202003241553107_startEndTimeNotNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251507546_ListOfClassesAddedInPlayingDateModel.cs" />
+    <Compile Include="Migrations\202003251507546_ListOfClassesAddedInPlayingDateModel.Designer.cs">
+      <DependentUpon>202003251507546_ListOfClassesAddedInPlayingDateModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251657346_classesView.cs" />
+    <Compile Include="Migrations\202003251657346_classesView.Designer.cs">
+      <DependentUpon>202003251657346_classesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251858213_ufigadbkc.cs" />
+    <Compile Include="Migrations\202003251858213_ufigadbkc.Designer.cs">
+      <DependentUpon>202003251858213_ufigadbkc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251901490_ufigadbkcoiljk.cs" />
+    <Compile Include="Migrations\202003251901490_ufigadbkcoiljk.Designer.cs">
+      <DependentUpon>202003251901490_ufigadbkcoiljk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251903301_ufigadbkcoiljkds.cs" />
+    <Compile Include="Migrations\202003251903301_ufigadbkcoiljkds.Designer.cs">
+      <DependentUpon>202003251903301_ufigadbkcoiljkds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261305120_opa.cs" />
+    <Compile Include="Migrations\202003261305120_opa.Designer.cs">
+      <DependentUpon>202003261305120_opa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261323155_check.cs" />
+    <Compile Include="Migrations\202003261323155_check.Designer.cs">
+      <DependentUpon>202003261323155_check.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261333106_checkk.cs" />
+    <Compile Include="Migrations\202003261333106_checkk.Designer.cs">
+      <DependentUpon>202003261333106_checkk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261351134_ops.cs" />
+    <Compile Include="Migrations\202003261351134_ops.Designer.cs">
+      <DependentUpon>202003261351134_ops.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003271425176_removeClassIdFromPlayingDatemodel.cs" />
+    <Compile Include="Migrations\202003271425176_removeClassIdFromPlayingDatemodel.Designer.cs">
+      <DependentUpon>202003271425176_removeClassIdFromPlayingDatemodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003271427236_courtPlayingDatesMadeList.cs" />
+    <Compile Include="Migrations\202003271427236_courtPlayingDatesMadeList.Designer.cs">
+      <DependentUpon>202003271427236_courtPlayingDatesMadeList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003291717347_MatchAddedInModels.cs" />
+    <Compile Include="Migrations\202003291717347_MatchAddedInModels.Designer.cs">
+      <DependentUpon>202003291717347_MatchAddedInModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003291722020_MatchAddedInModelsTNkey.cs" />
+    <Compile Include="Migrations\202003291722020_MatchAddedInModelsTNkey.Designer.cs">
+      <DependentUpon>202003291722020_MatchAddedInModelsTNkey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003301306570_PlayingDateMethodAdded.cs" />
+    <Compile Include="Migrations\202003301306570_PlayingDateMethodAdded.Designer.cs">
+      <DependentUpon>202003301306570_PlayingDateMethodAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003311036531_scheduleIndex.cs" />
+    <Compile Include="Migrations\202003311036531_scheduleIndex.Designer.cs">
+      <DependentUpon>202003311036531_scheduleIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004011548138_bool.cs" />
+    <Compile Include="Migrations\202004011548138_bool.Designer.cs">
+      <DependentUpon>202004011548138_bool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Court.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\PlayingDate.cs" />
+    <Compile Include="Models\StartDateLowerThenEndDateValidation.cs" />
+    <Compile Include="Models\Tournament.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schedule.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\TournamentViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-lumen.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\utilities.less" />
+    <Content Include="Content\bootstrap\type.less" />
+    <Content Include="Content\bootstrap\tooltip.less" />
+    <Content Include="Content\bootstrap\thumbnails.less" />
+    <Content Include="Content\bootstrap\theme.less" />
+    <Content Include="Content\bootstrap\tables.less" />
+    <Content Include="Content\bootstrap\scaffolding.less" />
+    <Content Include="Content\bootstrap\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\responsive-embed.less" />
+    <Content Include="Content\bootstrap\progress-bars.less" />
+    <Content Include="Content\bootstrap\print.less" />
+    <Content Include="Content\bootstrap\popovers.less" />
+    <Content Include="Content\bootstrap\panels.less" />
+    <Content Include="Content\bootstrap\pagination.less" />
+    <Content Include="Content\bootstrap\pager.less" />
+    <Content Include="Content\bootstrap\normalize.less" />
+    <Content Include="Content\bootstrap\navs.less" />
+    <Content Include="Content\bootstrap\navbar.less" />
+    <Content Include="Content\bootstrap\modals.less" />
+    <Content Include="Content\bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="Content\bootstrap\mixins\text-overflow.less" />
+    <Content Include="Content\bootstrap\mixins\text-emphasis.less" />
+    <Content Include="Content\bootstrap\mixins\table-row.less" />
+    <Content Include="Content\bootstrap\mixins\tab-focus.less" />
+    <Content Include="Content\bootstrap\mixins\size.less" />
+    <Content Include="Content\bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="Content\bootstrap\mixins\resize.less" />
+    <Content Include="Content\bootstrap\mixins\reset-text.less" />
+    <Content Include="Content\bootstrap\mixins\reset-filter.less" />
+    <Content Include="Content\bootstrap\mixins\progress-bar.less" />
+    <Content Include="Content\bootstrap\mixins\panels.less" />
+    <Content Include="Content\bootstrap\mixins\pagination.less" />
+    <Content Include="Content\bootstrap\mixins\opacity.less" />
+    <Content Include="Content\bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="Content\bootstrap\mixins\nav-divider.less" />
+    <Content Include="Content\bootstrap\mixins\list-group.less" />
+    <Content Include="Content\bootstrap\mixins\labels.less" />
+    <Content Include="Content\bootstrap\mixins\image.less" />
+    <Content Include="Content\bootstrap\mixins\hide-text.less" />
+    <Content Include="Content\bootstrap\mixins\grid.less" />
+    <Content Include="Content\bootstrap\mixins\grid-framework.less" />
+    <Content Include="Content\bootstrap\mixins\gradients.less" />
+    <Content Include="Content\bootstrap\mixins\forms.less" />
+    <Content Include="Content\bootstrap\mixins\clearfix.less" />
+    <Content Include="Content\bootstrap\mixins\center-block.less" />
+    <Content Include="Content\bootstrap\mixins\buttons.less" />
+    <Content Include="Content\bootstrap\mixins\border-radius.less" />
+    <Content Include="Content\bootstrap\mixins\background-variant.less" />
+    <Content Include="Content\bootstrap\mixins\alerts.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\media.less" />
+    <Content Include="Content\bootstrap\list-group.less" />
+    <Content Include="Content\bootstrap\labels.less" />
+    <Content Include="Content\bootstrap\jumbotron.less" />
+    <Content Include="Content\bootstrap\input-groups.less" />
+    <Content Include="Content\bootstrap\grid.less" />
+    <Content Include="Content\bootstrap\glyphicons.less" />
+    <Content Include="Content\bootstrap\forms.less" />
+    <Content Include="Content\bootstrap\dropdowns.less" />
+    <Content Include="Content\bootstrap\component-animations.less" />
+    <Content Include="Content\bootstrap\code.less" />
+    <Content Include="Content\bootstrap\close.less" />
+    <Content Include="Content\bootstrap\carousel.less" />
+    <Content Include="Content\bootstrap\buttons.less" />
+    <Content Include="Content\bootstrap\button-groups.less" />
+    <Content Include="Content\bootstrap\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\bootstrap.less" />
+    <Content Include="Content\bootstrap\badges.less" />
+    <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include="Content\_bootstrap-datetimepicker.less" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Tournament\CreateEditTournament.cshtml" />
+    <Content Include="Views\Tournament\Class.cshtml" />
+    <Content Include="Views\Tournament\Index.cshtml" />
+    <Content Include="Views\Shared\_TournamentSteps.cshtml" />
+    <Content Include="Views\Tournament\Court.cshtml" />
+    <Content Include="Views\Tournament\Times.cshtml" />
+    <Content Include="Views\Tournament\Schedule.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202003031433038_initial.resx">
+      <DependentUpon>202003031433038_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031435207_AddClassTable.resx">
+      <DependentUpon>202003031435207_AddClassTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031439439_AddTNTable.resx">
+      <DependentUpon>202003031439439_AddTNTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031542444_PlayingDatesTable.resx">
+      <DependentUpon>202003031542444_PlayingDatesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031548019_WTF.resx">
+      <DependentUpon>202003031548019_WTF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031616128_Datetime.resx">
+      <DependentUpon>202003031616128_Datetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031632463_removeClassIdfromplayingdatesobject.resx">
+      <DependentUpon>202003031632463_removeClassIdfromplayingdatesobject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031658540_playingdatesAdded.resx">
+      <DependentUpon>202003031658540_playingdatesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003040754591_ClassObjectPropUpdated.resx">
+      <DependentUpon>202003040754591_ClassObjectPropUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041411032_UpdatedModel1.resx">
+      <DependentUpon>202003041411032_UpdatedModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003172211227_CourtModelAdded.resx">
+      <DependentUpon>202003172211227_CourtModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191058533_courtadded.resx">
+      <DependentUpon>202003191058533_courtadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191121293_courtModified.resx">
+      <DependentUpon>202003191121293_courtModified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191133008_removeCourtModel.resx">
+      <DependentUpon>202003191133008_removeCourtModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191133564_AddCourtModel.resx">
+      <DependentUpon>202003191133564_AddCourtModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191141109_addfuckingcourt.resx">
+      <DependentUpon>202003191141109_addfuckingcourt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191143325_mokra.resx">
+      <DependentUpon>202003191143325_mokra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191146496_courtFinaly.resx">
+      <DependentUpon>202003191146496_courtFinaly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191148419_court-playingdate-forgeinkey.resx">
+      <DependentUpon>202003191148419_court-playingdate-forgeinkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191150035_court-TN-forgeinkey.resx">
+      <DependentUpon>202003191150035_court-TN-forgeinkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191156460_court-TN-forgeinkey2.resx">
+      <DependentUpon>202003191156460_court-TN-forgeinkey2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191159513_deleted_court.resx">
+      <DependentUpon>202003191159513_deleted_court.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191200423_add_court_again.resx">
+      <DependentUpon>202003191200423_add_court_again.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191237528_miracle.resx">
+      <DependentUpon>202003191237528_miracle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191241048_miracle3.resx">
+      <DependentUpon>202003191241048_miracle3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191309263_kola.resx">
+      <DependentUpon>202003191309263_kola.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191313029_kolagumikey.resx">
+      <DependentUpon>202003191313029_kolagumikey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191317184_bandazi.resx">
+      <DependentUpon>202003191317184_bandazi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191319391_court-TN.resx">
+      <DependentUpon>202003191319391_court-TN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191320055_court-TN2.resx">
+      <DependentUpon>202003191320055_court-TN2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191322299_court-TN3.resx">
+      <DependentUpon>202003191322299_court-TN3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191326596_ratkapna.resx">
+      <DependentUpon>202003191326596_ratkapna.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191342531_bandazi-ratkapni.resx">
+      <DependentUpon>202003191342531_bandazi-ratkapni.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191348204_court-date.resx">
+      <DependentUpon>202003191348204_court-date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191350010_carPartsRemovedFromModels.resx">
+      <DependentUpon>202003191350010_carPartsRemovedFromModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191514144_strange.resx">
+      <DependentUpon>202003191514144_strange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191557318_removeCourtFromTournament2.resx">
+      <DependentUpon>202003191557318_removeCourtFromTournament2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191608316_removeCourtFromTournament3.resx">
+      <DependentUpon>202003191608316_removeCourtFromTournament3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191610117_removeCourtFromTournament34.resx">
+      <DependentUpon>202003191610117_removeCourtFromTournament34.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191611291_removeCourtFromTournament345.resx">
+      <DependentUpon>202003191611291_removeCourtFromTournament345.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191614375_removeCourtFromTournament3456.resx">
+      <DependentUpon>202003191614375_removeCourtFromTournament3456.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191620514_wowo.resx">
+      <DependentUpon>202003191620514_wowo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191622372_courtsadded.resx">
+      <DependentUpon>202003191622372_courtsadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003211339532_startEndTimeNullableInPlayingDatesModel.resx">
+      <DependentUpon>202003211339532_startEndTimeNullableInPlayingDatesModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003231332076_playingdatesTNforgeinKey.resx">
+      <DependentUpon>202003231332076_playingdatesTNforgeinKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003241553107_startEndTimeNotNullable.resx">
+      <DependentUpon>202003241553107_startEndTimeNotNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251507546_ListOfClassesAddedInPlayingDateModel.resx">
+      <DependentUpon>202003251507546_ListOfClassesAddedInPlayingDateModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251657346_classesView.resx">
+      <DependentUpon>202003251657346_classesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251858213_ufigadbkc.resx">
+      <DependentUpon>202003251858213_ufigadbkc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251901490_ufigadbkcoiljk.resx">
+      <DependentUpon>202003251901490_ufigadbkcoiljk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251903301_ufigadbkcoiljkds.resx">
+      <DependentUpon>202003251903301_ufigadbkcoiljkds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261305120_opa.resx">
+      <DependentUpon>202003261305120_opa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261323155_check.resx">
+      <DependentUpon>202003261323155_check.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261333106_checkk.resx">
+      <DependentUpon>202003261333106_checkk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261351134_ops.resx">
+      <DependentUpon>202003261351134_ops.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003271425176_removeClassIdFromPlayingDatemodel.resx">
+      <DependentUpon>202003271425176_removeClassIdFromPlayingDatemodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003271427236_courtPlayingDatesMadeList.resx">
+      <DependentUpon>202003271427236_courtPlayingDatesMadeList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003291717347_MatchAddedInModels.resx">
+      <DependentUpon>202003291717347_MatchAddedInModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003291722020_MatchAddedInModelsTNkey.resx">
+      <DependentUpon>202003291722020_MatchAddedInModelsTNkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301306570_PlayingDateMethodAdded.resx">
+      <DependentUpon>202003301306570_PlayingDateMethodAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003311036531_scheduleIndex.resx">
+      <DependentUpon>202003311036531_scheduleIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004011548138_bool.resx">
+      <DependentUpon>202004011548138_bool.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63589</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:63589/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
