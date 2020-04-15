@@ -14,7 +14,9 @@
 
 <body>
 
-
+    @{
+        var defaultDate = new DateTime();
+    }
 
     <h2>Times</h2>
 
@@ -25,16 +27,23 @@
         int i = 0;
         foreach (var date in Model.Tournament.PlayingDates)
         {
-    <h3>Playing Date : @date.Date.ToString("dd/MM/yyyy")</h3>
+            defaultDate = date.Date;
+            
+            <h3>Playing Date : @date.Date.ToString("dd/MM/yyyy")</h3>
             <div class="input-group">
                 <label>Start Time</label>
-                <input type="text" name="Tournament.PlayingDates[@(i)].StartTime" class="form-control datetimepicker3" value="@date.StartTime.ToString("hh:mm tt")" />
+                <input type="text" name="Tournament.PlayingDates[@(i)].StartTime" class="form-control datetimepicker3" value="@date.StartTime.ToString("hh: mm tt")" />
+                <input type="hidden" value="@date.StartTime.ToString()"
             </div>
-
-            <div class="input-group">
-                <label>End Time</label>
-                <input type="text" name="Tournament.PlayingDates[@(i)].EndTime" class="form-control datetimepicker3" value="@date.EndTime.ToString("hh:mm tt")" />
-            </div>
+            // value = "@date.StartTime.ToString("hh: mm tt")"
+<div class="input-group">
+    <label>End Time</label>
+    @{
+        var checkDate = @date.EndTime;
+        var ckckc2 = date.EndTime.ToString();
+    }
+    <input type="text" name="Tournament.PlayingDates[@(i)].EndTime" class="form-control datetimepicker3" prefix="@date.EndTime" value="@date.EndTime.ToString("hh: mm tt")" />
+</div>
 
             var ListOfCourtsInTN = @Model.Tournament.Courts.ToList();
 
@@ -49,7 +58,7 @@
                     var gomce = "gomce";
 
 
-                <option @selected value="@courtId">@ListOfCourtsInTN[j].Name</option>
+                    <option @selected value="@courtId">@ListOfCourtsInTN[j].Name</option>
                 }
             </select>
 

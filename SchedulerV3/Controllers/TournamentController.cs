@@ -79,10 +79,13 @@ namespace SchedulerV3.Controllers
                 {
                     var playingDate = new PlayingDate();
                     playingDate.Date = @class.ListOfPlayingDates[i];
+                    playingDate.StartTime = new DateTime(playingDate.Date.Year, playingDate.Date.Month, playingDate.Date.Day, 8, 0, 0);
+                    playingDate.EndTime = new DateTime(playingDate.Date.Year, playingDate.Date.Month, playingDate.Date.Day, 22, 0, 0);
                     playingDate.Classes.Add(@class);
                     playingDate.Tournament = tournament;
                     _context.PlayingDates.Add(playingDate);
                     _context.SaveChanges();
+                    var playingDatesInDB = _context.PlayingDates.Where(x =>x.Tournament.Id == tournament.Id).ToList();
                 }
 
 
@@ -185,8 +188,17 @@ namespace SchedulerV3.Controllers
             var playingDatesInDB = _context.PlayingDates.Where(x => Ids.Contains(x.Id)).ToList();
             for (int i = 0; i < playingDatesInDB.Count(); i++)
             {
-                playingDatesInDB[i].StartTime = tournament.PlayingDates.SingleOrDefault(x => x.Id == Ids[i]).StartTime;
-                playingDatesInDB[i].EndTime = tournament.PlayingDates.SingleOrDefault(x => x.Id == Ids[i]).EndTime;
+                var tnStartTime = tournament.PlayingDates.SingleOrDefault(x => x.Id == Ids[i]).StartTime;
+                var tnEndTime = tournament.PlayingDates.SingleOrDefault(x => x.Id == Ids[i]).EndTime;
+                playingDatesInDB[i].StartTime = new DateTime(playingDatesInDB[i].StartTime.Year, playingDatesInDB[i]
+                    .StartTime.Month, playingDatesInDB[i].StartTime.Day, tnStartTime.Hour, tnStartTime.Minute, tnStartTime.Second);
+
+                playingDatesInDB[i].EndTime = new DateTime(playingDatesInDB[i].EndTime.Year, playingDatesInDB[i]
+                    .EndTime.Month, playingDatesInDB[i].EndTime.Day, tnEndTime.Hour, tnEndTime.Minute, tnEndTime.Second);
+
+                //playingDatesInDB[i].StartTime = tournament.PlayingDates.SingleOrDefault(x => x.Id == Ids[i]).StartTime;
+                //playingDatesInDB[i].EndTime = tournament.PlayingDates.SingleOrDefault(x => x.Id == Ids[i]).EndTime;
+
                 var playingDatesInDBcheck = _context.PlayingDates.Where(x => Ids.Contains(x.Id)).ToList();
 
                 var playingdateCourtsId = tournament.PlayingDates[i].CourtIds;
@@ -234,192 +246,7 @@ namespace SchedulerV3.Controllers
             return View("Schedule", viewModal);
 
 
-            // START
-
-            //var tn = _context.Tournaments
-            //    .Include(c => c.Classes.Select(x => x.PlayingDates))
-            //    .SingleOrDefault(z => z.Id == tournament.Id);
-
-            //var classes = _context.Classes
-            //    .Include(z => z.PlayingDates
-            //    .Select(x => x.Courts))
-            //    .Where(c => c.TournamentId == tournament.Id).ToList();
-
-            ////var matches = new List<Match>();
-            //var actualRound = 1;
-            //int scheduleIndex = 1;
-            //var maxRoundsForSchedule = classes.Select(c => c.NumberOfRounds).ToList().Max();
-            //int k = 0;
-            //while (maxRoundsForSchedule > 0)
-            //{
-            //    int i = 0;
-            //    var lastCourt = 0;
-
-            //    for (i = 0; i < classes.Count; i++)
-            //    {
-            //        var actualClass = classes[i];
-
-            //        if (actualRound > actualClass.NumberOfRounds)
-            //        {
-            //            continue;
-            //        }
-            //        var matchesForActualRound = actualClass.MatchesPerRound;
-            //        var klasaPlayingDates = actualClass.PlayingDates.ToList();
-            //        // klasaPlayingDates.Sort((pd1, pd2) => DateTime.Compare(pd1.Date, pd2.Date));
-            //        for (int j = 0; j < klasaPlayingDates.Count; j++)
-            //        {
-            //            if (matchesForActualRound == 0)
-            //            {
-            //                break;
-            //            }
-            //            var actualPlayingDate = klasaPlayingDates[j];
-            //            var courtsForDate = actualPlayingDate.Courts.ToList();
-
-
-
-
-
-
-            //            while (matchesForActualRound != 0)
-            //            {
-            //                if (matches.Count != 0)
-            //                {
-            //                    if (k == courtsForDate.Count)
-            //                    {
-            //                        lastCourt = 0;
-            //                    }
-            //                    else if (k == 0)
-            //                    {
-            //                        lastCourt = k + 1;
-            //                    }
-            //                    else lastCourt = k+1;
-            //                }
-
-
-            //                for (k = lastCourt; k < courtsForDate.Count; k++)
-            //                {
-            //                    var check = scheduleIndex;
-
-            //                    var match = new Match();
-            //                    match.matchScheduleIndex = scheduleIndex;
-            //                    var actualCourt = courtsForDate[k];
-            //                    var noOfMatchesOnCourt = matches.Where(c => c.Court.Id == actualCourt.Id).ToList().Count;
-            //                    if (noOfMatchesOnCourt == 0)
-            //                    {
-            //                        match.Class = actualClass;
-            //                        match.Round = actualRound;
-            //                        match.Court = actualCourt;
-            //                        match.Date = actualPlayingDate.Date;
-            //                        match.StartTime = actualPlayingDate.StartTime;
-            //                        match.EndTime = match.StartTime.AddMinutes(actualClass.MatchDuration);
-            //                        match.PlayingDate = actualPlayingDate;
-            //                        match.Tournament = tn;
-            //                        matches.Add(match);
-            //                        actualPlayingDate.Matches.Add(match);
-            //                        actualCourt.Matches.Add(match);
-            //                        scheduleIndex++;
-
-            //                    }
-            //                    else
-            //                    {
-            //                        var lastMatchOnCourt = actualCourt.LastScheduledMatch(matches, actualCourt, actualPlayingDate.Date);
-            //                        var lastMatchForDate = actualPlayingDate.LastScheduledMatch(matches, actualPlayingDate.Date);
-            //                        //var lastMatchForClassFromPreviousRound = 
-
-            //                        if (lastMatchOnCourt.Class == actualClass && lastMatchOnCourt.Round == actualRound)
-            //                        {
-            //                            match.Class = actualClass;
-            //                            match.Round = actualRound;
-            //                            match.Court = actualCourt;
-            //                            match.Date = actualPlayingDate.Date;
-            //                            match.StartTime = lastMatchOnCourt.EndTime;
-            //                            match.EndTime = match.StartTime.AddMinutes(actualClass.MatchDuration);
-            //                            match.PlayingDate = actualPlayingDate;
-            //                            match.Tournament = tn;
-            //                            matches.Add(match);
-            //                            actualPlayingDate.Matches.Add(match);
-            //                            actualCourt.Matches.Add(match);
-            //                            scheduleIndex++;
-            //                        }
-            //                        else if (lastMatchOnCourt.Class == actualClass && lastMatchOnCourt.Round != actualRound)
-            //                        {
-            //                            match.Class = actualClass;
-            //                            match.Round = actualRound;
-            //                            match.Court = actualCourt;
-            //                            match.Date = actualPlayingDate.Date;
-            //                            match.StartTime = lastMatchForDate.EndTime;
-            //                            match.StartTime = match.StartTime.AddMinutes(actualClass.MatchDuration);
-            //                            match.EndTime = match.StartTime.AddMinutes(actualClass.MatchDuration);
-            //                            match.PlayingDate = actualPlayingDate;
-            //                            match.Tournament = tn;
-            //                            matches.Add(match);
-            //                            actualPlayingDate.Matches.Add(match);
-            //                            actualCourt.Matches.Add(match);
-            //                            scheduleIndex++;
-            //                        }
-            //                        else if (lastMatchOnCourt.Class != actualClass && lastMatchOnCourt.Round == actualRound)
-            //                        {
-            //                            match.Class = actualClass;
-            //                            match.Round = actualRound;
-            //                            match.Court = actualCourt;
-            //                            match.Date = actualPlayingDate.Date;
-            //                            match.StartTime = lastMatchForDate.EndTime;
-            //                            match.StartTime = match.StartTime.AddMinutes(actualClass.MatchDuration);
-            //                            match.EndTime = match.StartTime.AddMinutes(actualClass.MatchDuration);
-            //                            match.PlayingDate = actualPlayingDate;
-            //                            match.Tournament = tn;
-            //                            matches.Add(match);
-            //                            actualPlayingDate.Matches.Add(match);
-            //                            actualCourt.Matches.Add(match);
-            //                            scheduleIndex++;
-            //                        }
-            //                        else if (lastMatchOnCourt.Class != actualClass && lastMatchOnCourt.Round != actualRound)
-            //                        {
-            //                            match.Class = actualClass;
-            //                            match.Round = actualRound;
-            //                            match.Court = actualCourt;
-            //                            match.Date = actualPlayingDate.Date;
-            //                            match.StartTime = lastMatchOnCourt.EndTime;
-            //                            match.EndTime = match.StartTime.AddMinutes(actualClass.MatchDuration);
-            //                            match.PlayingDate = actualPlayingDate;
-            //                            match.Tournament = tn;
-            //                            matches.Add(match);
-            //                            actualPlayingDate.Matches.Add(match);
-            //                            actualCourt.Matches.Add(match);
-            //                            scheduleIndex++;
-            //                        }
-                                    
-            //                    }
-            //                    matchesForActualRound--;
-            //                    if (matchesForActualRound == 0)
-            //                    {
-            //                        break;
-            //                    }
-            //                }
-
-            //            }
-            //        }
-
-            //        if (i == classes.Count - 1)
-            //        {
-            //            //i = 0;
-            //            actualRound++;
-            //            maxRoundsForSchedule--;
-            //            if (maxRoundsForSchedule == 0)
-            //            {
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-
-            //var viewModal = new TournamentViewModel();
-            //viewModal.Tournament = tn;
-            //viewModal.Tournament.Matches = matches;
-            //viewModal.Classes = classes;
-            //return View("Schedule", viewModal);
-
-            //END
+            
         }
 
         public ActionResult Schedule(int id)
@@ -429,6 +256,7 @@ namespace SchedulerV3.Controllers
                 .SingleOrDefault(c => c.Id == id);
             var viewModel = new TournamentViewModel();
             viewModel.Tournament = tournament;
+            viewModel.Classes = tournament.Classes.ToList();
             return View(viewModel);
         }
 

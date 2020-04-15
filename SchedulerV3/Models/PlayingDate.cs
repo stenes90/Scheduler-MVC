@@ -10,8 +10,8 @@
         public PlayingDate()
         {
             Courts = new HashSet<Court>();
-            StartTime = new DateTime(2000, 1, 1, 8, 0, 0);
-            EndTime = new DateTime(2000, 1, 1, 22, 0, 0);
+            //StartTime = new DateTime(2000, 1, 1, 8, 0, 0);
+            //EndTime = new DateTime(2000, 1, 1, 22, 0, 0);
             Classes = new HashSet<Class>();
             Matches = new List<Match>();
             CourtIds = new List<int>();

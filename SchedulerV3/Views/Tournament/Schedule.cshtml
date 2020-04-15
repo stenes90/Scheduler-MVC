@@ -24,19 +24,61 @@
     listOfColor.Add("#48C9B0");
     listOfColor.Add("#F4D03F");
     listOfColor.Add("#5D6D7E");
+}
 
+@{
 
+    
+    <table class="table table-hover" id="classesTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Playing Dates</th>
+                <th>Number Of Rounds</th>
+                <th>Matches per round</th>
+                <th>Match duration</th>
+                <th>Break duration</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            @foreach (var klasa in Model.Classes)
+            {
+                var matchClassIndexx = Model.Classes.IndexOf(klasa);
+               
+                <tr style="background-color: @(listOfColor[matchClassIndexx])">
+                    <td>@klasa.Name</td>
+                    <td>
+                        @foreach (var day in klasa.PlayingDates)
+                        {
 
+                            @day.Date.ToString("MMMM dd")
+                            <span>, </span>
 
+                        }
+                    </td>
+                    <td>@klasa.NumberOfRounds</td>
+                    <td>@klasa.MatchesPerRound</td>
+                    <td>@klasa.MatchDuration</td>
+                    <td>@klasa.BreakBetweenMatches</td>
+                    <
+                </tr>
+                
+            }
+
+        </tbody>
+
+    </table>
 }
 
 @foreach (var date in playingDates)
 {
+    <h3>@date.Date</h3>
     var actualDateCourts = date.Courts.ToList();
     <table class="table table-hover" id="classesTable">
         @foreach (var court in actualDateCourts)
         {
-            var actualCourtMatches = court.Matches.OrderBy(c => c.StartTime.TimeOfDay).ToList();
+            var actualCourtMatches = court.Matches.Where(c =>c.PlayingDate == date).OrderBy(c => c.StartTime.TimeOfDay).ToList();
             //actualCourtMatches.OrderBy(c => c.StartTime.TimeOfDay);
             <thead>
                 <tr>
@@ -46,33 +88,33 @@
                         {
                             <th style="background-color: white">
                                 BREAK
-                            @match.StartTime.TimeOfDay
-                            @match.EndTime.TimeOfDay;
-                            
-                        </th>
-                    }
-                    else
-                    {
-                        var matchClassIndex = Model.Classes.IndexOf(match.Class);
-                        <th style="background-color: @(listOfColor[matchClassIndex])">
-                            @match.StartTime.TimeOfDay
-                            @match.Class.Name
-                            Rnd: @match.Round;
-                            Dur: @match.Class.MatchDuration
-                            Ind: @match.matchScheduleIndex
-                        </th>
-                    }
+                                @match.StartTime.TimeOfDay
+                                @match.EndTime.TimeOfDay;
+
+                            </th>
+                        }
+                        else
+                        {
+                            var matchClassIndex = Model.Classes.IndexOf(match.Class);
+                            <th style="background-color: @(listOfColor[matchClassIndex])">
+                                @match.StartTime.TimeOfDay
+                                @match.Class.Name
+                                Rnd: @match.Round;
+                                Dur: @match.Class.MatchDuration
+                                Ind: @match.matchScheduleIndex
+                            </th>
+                        }
 
 
-                }
+                    }
 
                     @*<th>Name</th>
-        <th>Playing Dates</th>
-        <th>Number Of Rounds</th>
-        <th>Matches per round</th>
-        <th>Match duration</th>
-        <th>Break duration</th>
-        <th>Delete Class</th>*@
+                        <th>Playing Dates</th>
+                        <th>Number Of Rounds</th>
+                        <th>Matches per round</th>
+                        <th>Match duration</th>
+                        <th>Break duration</th>
+                        <th>Delete Class</th>*@
                 </tr>
             </thead>
         }

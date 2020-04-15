@@ -37,6 +37,7 @@ namespace SchedulerV3.Models
             var timeRange = new TimeRange();
             timeRange.Start = StartTime;
             timeRange.End = EndTime;
+            
 
             return timeRange;
         }

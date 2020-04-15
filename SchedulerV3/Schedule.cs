@@ -79,11 +79,14 @@ namespace SchedulerV3.Models
 
 
             var matches = GenerateMatches(tournament);
+            var scheduledMatches = matches.Where(c => c.IsScheduled == true).ToList();
+            var notScheduledMatches = matches.Where(c => c.IsScheduled == false).ToList();
             int scheduleIndex = 1;
             var listOfScheduledMatches = new List<Match>();
             foreach (var date in tournament.PlayingDates)
             {
-
+                scheduledMatches = matches.Where(c => c.IsScheduled == true).ToList();
+                notScheduledMatches = matches.Where(c => c.IsScheduled == false).ToList();
                 var listOfCourts = date.Courts.ToList();
                 var endTime = date.EndTime;
                 var classesForDate = date.Classes;
@@ -91,7 +94,7 @@ namespace SchedulerV3.Models
                     .Where(x => x.IsScheduled == false).ToList();
 
                 var matchIndex = 0;
-                foreach (var match in matches)
+                foreach (var match in notScheduledMatches)
                 {
                     matchIndex++;
                     var nextAvailableTimeForClassMatch = new DateTime();
@@ -99,7 +102,7 @@ namespace SchedulerV3.Models
                     {
                         var lastScheduledMatchFromSameClassForPreviousRound =
                         listOfScheduledMatches.Where(c => c.Round == (match.Round - 1))
-                        .Where(x => x.Class == (match.Class)).ToList().Last();
+                        .Where(x => x.Class == (match.Class)).Where(z =>z.PlayingDate == date).ToList().Last();
                         nextAvailableTimeForClassMatch = lastScheduledMatchFromSameClassForPreviousRound.EndTime.AddMinutes(match.Class.BreakBetweenMatches);
                     }
                     catch (Exception)
@@ -113,7 +116,7 @@ namespace SchedulerV3.Models
                         checkTime.Start = date.StartTime.AddMinutes(1);
                         checkTime.End = checkTime.Start.AddSeconds(16);
 
-                        var scheduledMatchesForCourt = court.Matches.Where(c => c.IsScheduled).ToList();
+                        var scheduledMatchesForCourt = court.Matches.Where(c => c.IsScheduled).Where(x =>x.PlayingDate == date).ToList();
                         var listOfMatchTimeRangesForCourt = new List<TimeRange>();
                         var courtName = court.Name;
                         foreach (var item in scheduledMatchesForCourt)
@@ -164,18 +167,79 @@ namespace SchedulerV3.Models
                         }
                     }
 
+                    if (listOfStartTimesForEachCourt.Count == 0)
+                    {
+                        break;
+                    }
+
                     var noOfscheduledMatches = matches.Where(c => c.IsScheduled == true).ToList().Count;
+                    var listofscheduledddd = matches.Where(c => c.IsScheduled == true).ToList();
+                    var listOfCourtss = tournament.Courts.ToList();
+                    var listofMatchesforCourt1 = listofscheduledddd.Where(c => c.Court == listOfCourtss[0]);
+                    var matchesRangesForCourt1 = new List<TimeRange>();
+                    foreach (var item in listofMatchesforCourt1)
+                    {
+                        matchesRangesForCourt1.Add(item.Timerange());
+                    }
+                    var listofMatchesforCourt2 = listofscheduledddd.Where(c => c.Court == listOfCourtss[1]);
+                    var matchesRangesForCourt2 = new List<TimeRange>();
+                    foreach (var item in listofMatchesforCourt2)
+                    {
+                        matchesRangesForCourt2.Add(item.Timerange());
+                    }
                     var smallestDate = listOfStartTimesForEachCourt.Min();
                     var indexOfSmallest = listOfStartTimesForEachCourt.IndexOf(smallestDate);
                     match.Court = listOfCourts[indexOfSmallest];
+                    var courtNameeee = match.Court.Name.ToString();
+                    var classNameee = match.Class.Name.ToString();
                     listOfCourts[indexOfSmallest].Matches.Add(match);
                     match.PlayingDate = date;
+                    match.Date = date.Date;
                     date.Matches.Add(match);
                     match.StartTime = smallestDate;
                     match.EndTime = match.StartTime.AddMinutes(match.Class.MatchDuration);
                     match.IsScheduled = true;
                     match.Tournament = tournament;
                     listOfScheduledMatches.Add(match);
+
+                    var matchesForCourtThatNeedToBeMoved = matches.Where(c => c.Court == listOfCourts[indexOfSmallest]).ToList().Where(x => x.StartTime > match.StartTime).ToList();
+                    if (matchesForCourtThatNeedToBeMoved.Count > 0)
+                    {
+                        var listOfMatchesTimeRanges = new List<TimeRange>();
+                        var listOfIntersectMatchesTimeRanges = new List<TimeRange>();
+
+                        foreach (var item in matchesForCourtThatNeedToBeMoved)
+                        {
+                            listOfMatchesTimeRanges.Add(item.Timerange());
+                        }
+
+                        foreach (var item in listOfMatchesTimeRanges)
+                        {
+                            if (item.IntersectsWith(match.Timerange()))
+                            {
+                                listOfIntersectMatchesTimeRanges.Add(item);
+                            }
+                        }
+
+                        if (listOfIntersectMatchesTimeRanges.Count >0)
+                        {
+                            var firstIntersectedMatch = listOfIntersectMatchesTimeRanges.First();
+                            var IntersectionInterval = match.Timerange().Duration - (firstIntersectedMatch.Start.TimeOfDay - match.StartTime.TimeOfDay);
+                            foreach (var item in matchesForCourtThatNeedToBeMoved)
+                            {
+                                item.EndTime = item.EndTime.AddMinutes(IntersectionInterval.TotalMinutes);
+                                item.StartTime= item.StartTime.AddMinutes(IntersectionInterval.TotalMinutes);
+                            }
+                        }
+                        
+
+                        
+
+
+                    }
+
+                    
+
 
                 }
             }
@@ -188,6 +252,8 @@ namespace SchedulerV3.Models
             var playingDates = tournament.PlayingDates;
             var courts = tournament.Courts;
             var matches = tournament.Matches;
+
+
             var listOfBreakTimeRanges = new List<TimeRange>();
 
             foreach (var date in playingDates)
