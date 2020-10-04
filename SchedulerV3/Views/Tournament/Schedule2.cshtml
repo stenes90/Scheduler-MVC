@@ -1,0 +1,803 @@
+﻿@model SchedulerV3.ViewModel.TournamentViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("_TournamentSteps")
+
+
+
+<h2>Schedule Matches</h2>
+
+@using (Html.BeginForm("ScheduleMatches", "Tournament", FormMethod.Post))
+{
+    @Html.HiddenFor(c => Model.Tournament.Id)
+    <button type="submit">Schedule All</button>
+}
+
+@{
+    var tournament = Model.Tournament;
+    var playingDates = tournament.PlayingDates.ToList();
+    var listOfColor = new List<string>();
+    listOfColor.Add("#CD6155");
+    listOfColor.Add("#AF7AC5");
+    listOfColor.Add("#7FB3D5");
+    listOfColor.Add("#48C9B0");
+    listOfColor.Add("#F4D03F");
+    listOfColor.Add("#5D6D7E");
+}
+
+@{
+
+
+    <table class="table table-hover" id="classesTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Playing Dates</th>
+                <th>Number Of Rounds</th>
+                <th>Matches per round</th>
+                <th>Match duration</th>
+                <th>Break duration</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var klasa in Model.Classes)
+            {
+                var matchClassIndexx = Model.Classes.IndexOf(klasa);
+
+                <tr style="background-color: @(listOfColor[matchClassIndexx])">
+                    <td>@klasa.Name</td>
+                    <td>
+                        @foreach (var day in klasa.PlayingDates)
+                        {
+
+                            @day.Date.ToString("MMMM dd")
+                            <span>, </span>
+
+                        }
+                    </td>
+                    <td>@klasa.NumberOfRounds</td>
+                    <td>@klasa.MatchesPerRound</td>
+                    <td>@klasa.MatchDuration</td>
+                    <td>@klasa.BreakBetweenMatches</td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+    </table>
+}
+
+@{
+    decimal fiveWidth = 0;
+}
+
+@foreach (var date in playingDates)
+{
+    if (date.Matches.Count == 0) { continue; }
+    var startTimeForDate = date.StartTime;
+    var actualDateMatches = date.Matches.OrderBy(c => c.StartTime.TimeOfDay).ToList();
+    var smallestMatchDuration = actualDateMatches.Min(c => c.Timerange().Duration.Minutes);
+    var minAvailableForDate = 1440 - (startTimeForDate.Hour * 60 + startTimeForDate.Minute);
+    var fiveMinColCount = minAvailableForDate / 5;
+    var fiveMinColwidth = ((decimal)10 / (smallestMatchDuration / 5));
+    fiveWidth = fiveMinColwidth;
+    var scrollerWidth = (fiveMinColCount * fiveMinColwidth);
+    var startTime = startTimeForDate;
+
+
+    <h3>@date.Date</h3>
+    var actualDateCourts = date.Courts.ToList();
+    var timetableHeight = actualDateCourts.Count * 100;
+    var fiveMinColHeight = (decimal)100 / actualDateCourts.Count;
+
+    <div class="container-fluid container-scroll" style="overflow-x: auto;
+        position: relative;
+        height: @(timetableHeight +"px");">
+        @foreach (var court in actualDateCourts)
+        {
+            <div class="row columns court-div" style="width: @(scrollerWidth + "vw"); height: @(fiveMinColHeight + "%"); position: relative;">
+                @for (int i = 0; i < fiveMinColCount; i++)
+                {
+
+                    <div class="col-fiveMin" data-time="@startTime" data-time-index="@i" style="border: 0.5px solid black;
+        width: @(fiveMinColwidth + "vw") !important;
+        float: left;
+        font-weight: bold;
+        text-align: center;
+        height: 100%;"><span class="col-time">@startTime.ToString("HH:mm")</span></div>
+
+        startTime = startTime.AddMinutes(5);
+
+        if (i == fiveMinColCount - 1)
+        {
+            startTime = startTimeForDate;
+        }
+    }
+                @{
+
+                    var actualCourtMatches = court.Matches.Where(c => c.PlayingDate == date).OrderBy(c => c.StartTime.TimeOfDay).ToList();
+                }
+
+                @foreach (var match in actualCourtMatches)
+                {
+                    var matchDuration = match.Timerange().Duration.Minutes;
+                    var matchWidth = (matchDuration / 5) * fiveMinColwidth;
+                    var matchFiveMinFieldsCovering = matchDuration / 5;  // shows how many 5min fields it covers
+                                                                         //var matchPositionLeft = (match.StartTime - date.StartTime).TotalMinutes / 5 * fiveMinColwidth;
+                    var matchPositionLeft = (decimal)(match.StartTime - date.StartTime).TotalMinutes;
+                    matchPositionLeft = (matchPositionLeft / 5) * fiveMinColwidth;
+                    if (!match.IsScheduled)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        var matchClassIndex = Model.Classes.IndexOf(match.Class);
+
+
+                        <div class="match-div" data-time="@match.StartTime" data-matchId="@match.Id" data-fields-covering="@matchFiveMinFieldsCovering" data-court="@court.Id" style="background-color:
+                                     @(listOfColor[matchClassIndex]) ;
+                                    position: absolute;
+                                    left: @(matchPositionLeft + "vw");
+                                    width: @(matchWidth + "vw");
+                        top: 20%;
+                        display: flex;
+                        flex-direction: column;
+                        font-size: 10px;
+                        border: black solid 1px;
+                            ">
+                            <p style="padding: 0px; margin: 0px;">@match.StartTime.TimeOfDay</p>
+                            <p style="padding: 0px; margin: 0px;">@match.Class.Name</p>
+                            <p style="padding: 0px; margin: 0px;">Rnd: @match.Round;</p>
+                            <p style="padding: 0px; margin: 0px;">Dur: @match.Class.MatchDuration</p>
+                        </div>
+                    }
+
+
+                }
+
+
+
+
+
+
+            </div>
+        }
+    </div>
+
+    <div id="menu" style="height: 25px; width:70px; text-align:center; visibility: hidden;  opacity: 0; background-color: white; border: 1px solid black; border-radius: 5px">
+        <a style="text-decoration: solid; color: black; cursor: pointer">Move</a>
+    </div>
+    <div id="paste" style="height: 25px; width:70px; text-align:center; visibility: hidden;  opacity: 0; background-color: white; border: 1px solid black; border-radius: 5px">
+        <a style="text-decoration: solid; color: black; cursor: pointer">Paste</a>
+    </div>
+}
+
+
+@section Scripts{
+
+    <script>
+        let matches = document.querySelectorAll(".match-div");
+        let courts = document.querySelectorAll(".court-div");
+        let copyMenu = document.getElementById("menu");
+        let pasteMenu = document.getElementById("paste");
+        let fiveMinCols = document.querySelectorAll(".col-fiveMin");
+        let coppiedMatch;
+        let matchCoppied = false;
+        let firstIntersectedMatch;
+
+
+        
+
+
+        
+
+        //- startTime
+        //    - indexOfFirstField
+        //    - IndexOfLastField
+        //    - matchTimeFields   // fiveMinCol that are covered by the match
+        //    - matchIndex       // index of the match in the court matches
+        //    - court
+
+
+        
+
+        function updateCourtMatches() {
+            for (court of courts) {
+                court.matches = court.querySelectorAll(".match-div");
+
+            }
+        }
+        updateCourtMatches();
+
+        //function compare(a, b) {
+        //    if (a > b) return 1;
+        //    if (b > a) return -1;
+
+        //    return 0;
+        //}
+
+        function updateMatchesCourt() {
+            for (match of matches) {
+                match.court = match.parentElement;
+            }
+        }
+        updateMatchesCourt();
+
+        function fiveMinColsForCourt() {
+            for (court of courts) {
+                court.fiveMinCols = court.querySelectorAll(".col-fiveMin");
+            }
+        }
+        fiveMinColsForCourt();
+
+        
+
+        function updateMatchTimeFields(matches) {
+            let allMatchTimeFields = [];
+            for (match of matches) {
+                let firstField = Array.from(match.court.fiveMinCols).find(element => element.getAttribute("data-time") == match.getAttribute("data-time"));
+                let indexOfFirstField = Array.from(match.court.fiveMinCols).indexOf(firstField)
+                match.indexOfFirstField = indexOfFirstField;
+                let matchFieldWidth = parseInt(match.getAttribute("data-fields-covering"));
+                match.indexOfLastField = indexOfFirstField + matchFieldWidth - 1;
+                let matchFields = [];
+                for (i = 0; i < matchFieldWidth; i++) {
+                    matchFields.push(indexOfFirstField);
+                    indexOfFirstField++;
+                }
+                match.matchTimeFields = matchFields;
+                allMatchTimeFields = allMatchTimeFields.concat(matchFields);
+            }
+        }
+        updateMatchTimeFields(matches);
+
+        debugger;
+
+        //function updateMatches() {
+        //    updateCourtMatches();
+        //    updateMatchesCourt();
+        //    fiveMinColsForCourt();
+        //    updateMatchTimeFields(matches);
+        //}
+
+
+
+
+        // showing copy menu when right click on any match.
+        matches.forEach(match => {
+            match.addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+                var posX = e.clientX;
+                var posY = e.clientY;
+                copy(posX, posY);
+                //Copying actual match, showing grid over matches
+                copyMenu.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    coppiedMatch = match;
+                    showGridOverMatches();
+                    coppiedMatch.style.zIndex = "15";
+                    coppiedMatch.style.opacity = "1";
+                    matchCoppied = true;
+
+                })
+            })
+        })
+        //Closing copy menu with left click anywhere
+        document.addEventListener("click", function () {
+            copyMenu.style.visibility = "hidden";
+            copyMenu.style.opacity = "0";
+        })
+
+
+
+
+        function showGridOverMatches() {
+            let fiveMinCol = document.querySelectorAll(".col-fiveMin");
+            let matches = document.querySelectorAll(".match-div");
+            for (col of fiveMinCol) {
+                col.style.position = "relative";
+                col.style.zIndex = "10";
+            }
+            for (match of matches) {
+                match.style.opacity = "50%"
+            }
+        }
+
+        function showMatchesOverGrid() {
+            let fiveMinCol = document.querySelectorAll(".col-fiveMin");
+            let matches = document.querySelectorAll(".match-div");
+            for (col of fiveMinCol) {
+                col.style.position = "static";
+                col.style.zIndex = "0";
+            }
+            for (match of matches) {
+                match.style.opacity = "1"
+            }
+        }
+
+        // showing copy menu
+        function copy(x, y) {
+            copyMenu.style.top = y + "px";
+            copyMenu.style.left = x + "px";
+            copyMenu.style.visibility = "visible";
+            copyMenu.style.opacity = "1";
+            copyMenu.style.position = "absolute";
+            copyMenu.style.zIndex = 15;
+        }
+        //showing paste menu
+        function paste(x, y) {
+            if (matchCoppied) {
+                pasteMenu.style.top = y + "px";
+                pasteMenu.style.left = x + "px";
+                pasteMenu.style.visibility = "visible";
+                pasteMenu.style.opacity = "1";
+                pasteMenu.style.position = "absolute";
+                pasteMenu.style.zIndex = 15;
+            }
+            else return;
+        }
+
+
+
+
+        // Creating artificial match (copy of actual match) with same dimensions as original
+        function ghostMatch(coppiedMatch, fiveMinColTimeIndex) {
+            if (matchCoppied == false) {
+                let ghostElement = document.createElement("div");
+                ghostElement.style.visibility = "hidden";
+                return ghostElement;
+            }
+            else {
+            let ghostElement = document.createElement("div");
+            ghostElement.className = ("ghost-element");
+            let move = @fiveWidth * fiveMinColTimeIndex;
+            ghostElement.style.width = coppiedMatch.style.width;
+            ghostElement.style.height = coppiedMatch.offsetHeight + "px";
+            ghostElement.textContent = "move here";
+            ghostElement.style.position = "absolute";
+            ghostElement.style.top = "20%";
+            ghostElement.style.zIndex = 15;
+            ghostElement.style.backgroundColor = "Red"
+            ghostElement.style.left = move + "vw";
+            if (!matchCoppied) {
+                ghostElement.style.visibility = "hidden";
+                let pasteDiv = document.getElementById("paste");
+                pasteDiv.style.visibility = "hidden";
+            }
+                return ghostElement;
+            }
+        }
+
+
+
+        //Adding Paste(move) menu for each fiveMinCol
+                fiveMinCols.forEach(col => {
+                    col.addEventListener("contextmenu", function (e) {
+                        e.preventDefault();
+                        removeGhost();
+                        var posX = e.clientX;
+                        var posY = e.clientY;
+                        paste(posX, posY);
+                        let court = col.parentElement;
+                        let ghost = ghostMatch(coppiedMatch, col.getAttribute("data-time-index"));
+                        ghost.setAttribute("indexOfFirstField", col.getAttribute("data-time-index"));
+                        court.appendChild(ghost);
+                    })
+                })
+
+
+        let pasteLink = document.getElementById("paste");
+        pasteLink.addEventListener("click", function () {
+            let ghost = document.querySelector(".ghost-element");
+            let court = ghost.parentElement;
+            let fiveMinColsForCourt = court.querySelectorAll(".col-fiveMin");
+            let col = Array.from(fiveMinColsForCourt).find(c => c.getAttribute("data-time-index") == ghost.getAttribute("indexOfFirstField"));
+            let matchesForCourt = Array.from(matches).filter(match => match.parentElement == court);
+            coppiedMatch.remove();
+            pasteLink.style.visibility = "hidden";
+            court.appendChild(coppiedMatch);
+            coppiedMatch.style.left = ghost.style.left;
+            showMatchesOverGrid();
+            matchCoppied = false;
+            //Updating the time fields that the match is covering after paste
+            coppiedMatch.setAttribute("data-time", col.getAttribute("data-time"));
+            coppiedMatch.indexOfFirstField = parseInt(ghost.getAttribute("indexOfFirstField"));
+            coppiedMatch.indexOfLastField = coppiedMatch.indexOfFirstField + coppiedMatch.matchTimeFields.length - 1;
+            let initialTimeIndex = coppiedMatch.indexOfFirstField;
+            for (i = 0; i < coppiedMatch.matchTimeFields.length; i++) {
+                coppiedMatch.matchTimeFields[i] = initialTimeIndex;
+                initialTimeIndex++;
+            }
+            removeGhost();
+            matchesForCourt = Array.from(matches).filter(match => match.parentElement == court);
+
+            matchesForCourt.sort((a, b) => {
+                return (a.matchTimeFields[0] - b.matchTimeFields[0])
+            })
+            debugger;
+
+            //Updating the time fields that the match is covering after paste
+            //let initMatchTimeField = Array.from(fiveMinColsForCourt).indexOf(col);
+            //let matchTimeFieldsCount = parseInt(coppiedMatch.getAttribute("data-fields-covering"));
+            //coppiedMatch.lastTimeField = initMatchTimeField + matchTimeFieldsCount - 1;
+            //for (i = 0; i < matchTimeFieldsCount; i++) {
+            //    coppiedMatch.matchTimeFields[i] = initMatchTimeField;
+            //    initMatchTimeField++;
+            //}
+            let intersectedMatchFiveMinColIndex = intersectedMatchTimeIndex(coppiedMatch, court.matches);
+           // let intersectedMatch = Array.from(court.matches).find(c => c.matchStartTimeFieldIndex == intersectedMatchFiveMinColIndex);
+            let matchMovement = movement(coppiedMatch, court.matches);
+            matchesForCourt = matchesForCourt.filter(c => c != firstIntersectedMatch);
+            matchesForCourt.unshift(firstIntersectedMatch);
+            
+            for (i = matchesForCourt.length - 1; i >= 0; i--) {
+            //for (i = 0; i < matchesForCourt.length -1; i++) {
+
+                let actualMatch = matchesForCourt[i];
+                console.log(matchesForCourt[i]);
+                console.log(i);
+                if (matchesForCourt[i] === coppiedMatch) {
+                    continue;
+                }
+                let emptyFields = emptyFieldsBeforeMatchStart(matchesForCourt[i], matchesForCourt);
+
+                let check1 = emptyFields < matchMovement;
+                let check2 = actualMatch.matchTimeFields[0] >= firstIntersectedMatch.matchTimeFields[0];
+                let checkkkkk = matchesForCourt[i] != coppiedMatch;
+                if (emptyFields < matchMovement && (actualMatch.matchTimeFields[0] >= firstIntersectedMatch.matchTimeFields[0]) && actualMatch != coppiedMatch) {
+                    debugger;
+                    let move = parseFloat(matchesForCourt[i].style.left.slice(0, -2)) + ((matchMovement - emptyFields) * @fiveWidth);
+                    matchesForCourt[i].style.left = move + "vw";
+                    matchesForCourt[i].indexOfFirstField += matchMovement - emptyFields;
+                    matchesForCourt[i].indexOfLastField += matchMovement - emptyFields;
+                    
+                    for (j = 0; j < matchesForCourt[i].matchTimeFields.length; j++) {
+                        matchesForCourt[i].matchTimeFields[j]+=matchMovement;
+                    }
+                }
+            }
+        })
+
+
+        function movement(coppiedMatch, matchesForCourt) {
+            let intersectionMAtches = [];
+            let intersectedMatchesTimeFieldsIndexes = []; //Array of all matchTimeFields for all intersected matches
+            //let firstIntersectedMatch;
+            let movement;
+            let firstIntersectedMatchLength;
+            for (item of matchesForCourt) {
+                if (item === coppiedMatch) {
+                    continue;
+                }
+                let intersectionArray = item.matchTimeFields.filter(Set.prototype.has, new Set(coppiedMatch.matchTimeFields));
+                if (intersectionArray.length > 0) {
+                    intersectionMAtches.push(item)
+                }
+            }
+            console.log(intersectionMAtches[0].matchTimeFields);
+            for (item of intersectionMAtches) {
+                intersectedMatchesTimeFieldsIndexes = intersectedMatchesTimeFieldsIndexes.concat(item.matchTimeFields)
+            }
+            let min = Math.min.apply(Math, intersectedMatchesTimeFieldsIndexes)  // smallest MatchTimeStartIndex from all intersected matches
+            for (item of intersectionMAtches) {
+                console.log(item);
+                if (item.matchTimeFields.includes(min)) {
+                    firstIntersectedMatch = item;
+                    break;
+                }
+            }
+            firstIntersectedMatchLength = firstIntersectedMatch.matchTimeFields.length;
+            console.log(firstIntersectedMatch);
+            if (coppiedMatch.indexOfFirstField < firstIntersectedMatch.matchTimeFields[0]) {
+                movement = coppiedMatch.indexOfLastField - firstIntersectedMatch.matchTimeFields[0] + 1;
+            }
+            else if (coppiedMatch.indexOfFirstField == firstIntersectedMatch.matchTimeFields[0]) {
+                movement = coppiedMatch.matchTimeFields.length;
+            }
+            else {
+                movement = coppiedMatch.indexOfLastField - firstIntersectedMatch.matchTimeFields[firstIntersectedMatchLength - 1] + firstIntersectedMatch.matchTimeFields.length;
+            }
+            return movement;
+        }
+
+        function intersectedMatchTimeIndex(match, matchesForCourt) {
+            for (item of matchesForCourt) {
+                if (item == coppiedMatch) {
+                    continue;
+                }
+                let intersectionArray = item.matchTimeFields.filter(Set.prototype.has, new Set(match.matchTimeFields));
+                if (intersectionArray.length > 0) {
+                    return item.matchTimeFields[0];
+                }
+            }
+        }
+
+        function emptyFieldsBeforeMatchStart(match, matchesOnCourt) {
+            //start
+            let newtimefieldsWithmatches = [];
+            for (let matcho of matchesOnCourt) {
+                if (matcho == coppiedMatch) {
+                    continue;
+                }
+                let tempArrayy = matcho.matchTimeFields;
+                newtimefieldsWithmatches = newtimefieldsWithmatches.concat(tempArrayy);
+            }
+            let courtt = match.parentElement;
+            let timeFieldsForCourt = courtt.querySelectorAll(".col-fiveMin");
+            let emptyFieldsForCourt = [];
+            for (j = 0; j < timeFieldsForCourt.length; j++) {
+                if (!newtimefieldsWithmatches.includes(j)) {
+                    emptyFieldsForCourt.push(j);
+                }
+            }
+            //for (k = 0; k < coppiedMatch.matchTimeFields.length; k++) {
+            //    emptyFieldsForCourt= emptyFieldsForCourt.filter(c => c != coppiedMatch.matchTimeFields[k]);
+            //}
+            let emptyFieldsBetweenCoppiedAndActualMatch = emptyFieldsForCourt.filter(c => c >= firstIntersectedMatch.indexOfFirstField && c < match.indexOfFirstField)
+            console.log(emptyFieldsBetweenCoppiedAndActualMatch);
+            let noOfEmptyFields = emptyFieldsBetweenCoppiedAndActualMatch.length;
+            return noOfEmptyFields;
+            //end
+
+
+            //let matchStartTimeFieldIndex = match.indexOfFirstField;
+
+            //let timefieldsWithmatches = [];
+            //let matchesBetweenActualAndCoppiedMatch = Array.from(matchesOnCourt).filter(c => c.indexOfFirstField < match.indexOfFirstField && c.indexOfFirstField >= coppiedMatch.indexOfFirstField)
+            //let court = match.parentElement;
+            //let fiveMinCols = court.querySelectorAll(".col-fiveMin");
+            //for (matchhh of matchesBetweenActualAndCoppiedMatch) {
+            //    let tempArray = matchhh.matchTimeFields;
+            //    timefieldsWithmatches = timefieldsWithmatches.concat(tempArray);
+            //}
+            //let uniqueTimefieldsWithmatches = timefieldsWithmatches.filter(function (item, pos, self) {
+            //    return self.indexOf(item) == pos;
+            //})
+            //noOfEmptyFields = matchStartTimeFieldIndex - uniqueTimefieldsWithmatches.length - intersectedMatchFirstTimeField;
+            //if (noOfEmptyFields < 0) {
+            //    return 0
+            //}
+            //else {
+            //return noOfEmptyFields;
+            //}
+        }
+
+        function intersect(a, b) {
+            console.log(a.filter(Set.prototype.has, new Set(b)));
+        }
+
+        //function intersect(a, b) {
+        //    let intersectionArray = a.filter(Set.prototype.has, new Set(b));
+        //    if (intersectionArray > 0) {
+        //        return true;
+        //    }
+        //    else {
+        //        return false;
+        //    }
+        //}
+
+
+
+
+        //function moveIfOverlap(coppiedMatch, matchesFromCourt) {
+        //    let firstIntersectedMatch;
+        //    for (match of matchesFromCourt) {
+        //        if (intersect(match, coppiedMatch)) {
+        //            firstIntersectedMatch = match;
+        //            break;
+        //        }
+        //    }
+        //    let movement = coppiedMatch.matchTimeFields[matchTimeFields.length - 1] - match.matchTimeFields[0];
+        //    debugger;
+        //}
+
+
+
+            //If coppied match start time is higher that the overlapped match start time
+            // move overlapped match for intersection array length + coppied match lenth
+
+            //If coppied match start time is equal to the overlapped match start time
+            //move overlapped match for coppied match length
+
+            //If coppied match start time is lower than the overlapped match start time
+            //move overlapped match for the intersection array length
+
+
+
+
+
+        @*function moveIfOverlap(coppiedMatch, matchesFromCourt) {
+            let movePositions = 0;
+            let moveMatchesFromPosition = 0;
+            for (match of matchesFromCourt) {
+                let intersectionArray = intersect(coppiedMatch.matchTimeFields, match.matchTimeFields)
+                movePositions = intersectionArray.length;
+                if (movePositions > 0) {
+                    moveMatchesFromPosition = match.matchTimeFields[0];
+                    break;
+                }
+            }
+            if (movePositions > 0) {
+                for (match of matchesFromCourt) {
+                    if (match.matchTimeFields[0] >= moveMatchesFromPosition) {
+                        let positionAfterMoving = parseFloat(match.style.left.slice(0, -2)) + (movePositions * @fiveWidth);
+                        match.style.left = positionAfterMoving + "vw"
+
+                    }
+                }
+                let check1 = parseFloat(coppiedMatch.style.left.slice(0, -2));
+                let check2 = (parseInt(coppiedMatch.getAttribute("data-fields-covering")) * @fiveWidth);
+                console.log(coppiedMatch);
+                let coppiedMatchPositionAfterMoving = parseFloat(coppiedMatch.style.left.slice(0, -2)) - (parseInt(coppiedMatch.getAttribute("data-fields-covering")) * @fiveWidth);
+                coppiedMatch.style.left = coppiedMatchPositionAfterMoving + "vw"
+                console.log(coppiedMatch);
+                debugger;
+            }
+            else {
+                return;
+            }
+
+
+
+            function intersect(a, b) {
+                return a.filter(Set.prototype.has, new Set(b));
+            }
+
+
+        }*@
+
+
+
+
+
+
+
+        function disablePaste() {
+            //fiveMinCols.forEach(col => {
+            //    col.removeEventListener("contextmenu", function (e) {
+            //        pasteeee(e, col);
+            //    })
+            //})
+            //let pasteDiv = document.getElementById("paste");
+            //let ghostDiv = document.querySelector(".ghost-element");
+            //ghostDiv.style.display = "none";
+            //pasteDiv.style.display = "none";
+        }
+
+
+
+
+
+
+        function removeGhost() {
+            let ghostDiv = document.querySelector(".ghost-element");
+            if (ghostDiv != null) {
+                ghostDiv.remove();
+            }
+        }
+
+
+    </script>
+
+
+    @*<script>
+            //Make the DIV element draggagle:
+            dragElement(document.getElementsByClassName("match-div")[0]);
+
+            function dragElement(elmnt) {
+                var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                if (document.getElementById(elmnt.id + "header")) {
+                    /* if present, the header is where you move the DIV from:*/
+                    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+                } else {
+                    /* otherwise, move the DIV from anywhere inside the DIV:*/
+                    elmnt.onmousedown = dragMouseDown;
+                }
+
+                function dragMouseDown(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    // get the mouse cursor position at startup:
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    document.onmouseup = closeDragElement;
+                    // call a function whenever the cursor moves:
+                    document.onmousemove = elementDrag;
+                }
+
+                function elementDrag(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    // calculate the new cursor position:
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    // set the element's new position:
+                    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+                    elmnt.style.opacity = 0.5;
+                    elmnt.style.zIndex = 100;
+                }
+
+                function closeDragElement() {
+                    /* stop moving when mouse button is released:*/
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+            }
+        </script>*@
+}
+
+
+@*@foreach (var date in playingDates)
+    {
+        var startTimeForDate = date.StartTime;
+        var actualDateMatches = date.Matches.OrderBy(c => c.StartTime.TimeOfDay).ToList();
+        var smallestMatchDuration = actualDateMatches.Min(c => c.Timerange().Duration.Minutes);
+        var minAvailableForDate = 1440 - (startTimeForDate.Hour * 60 + startTimeForDate.Minute);
+        var fiveMinColCount = minAvailableForDate / 5;
+        var fiveMinColwidth = ((decimal)10 / (smallestMatchDuration / 5));
+        var scrollerWidth = (fiveMinColCount * fiveMinColwidth);
+        var startTime = startTimeForDate;
+
+
+
+        <h3>@date.Date</h3>
+        var actualDateCourts = date.Courts.ToList();
+        foreach (var court in actualDateCourts)
+        {
+            //actualCourtMatches.OrderBy(c => c.StartTime.TimeOfDay);
+            var actualCourtMatches = court.Matches.Where(c => c.PlayingDate == date).OrderBy(c => c.StartTime.TimeOfDay).ToList();
+            foreach (var match in actualCourtMatches)
+            {
+                var matchDuration = match.Timerange().Duration.Minutes;
+                var matchWidth = (matchDuration / 5) * fiveMinColwidth;
+                var matchPositionLeft = (match.StartTime - date.StartTime).Minutes / 5 * fiveMinColwidth;
+                if (!match.IsScheduled)
+                {
+                    break;
+                }
+                else
+                {
+                    var matchClassIndex = Model.Classes.IndexOf(match.Class);
+
+
+                    <div style="background-color:
+                             @(listOfColor[matchClassIndex]) ;
+                             position: absolute;
+                             left: @(matchPositionLeft + "vw");
+                             width: @(matchWidth + "vw"));
+                             top: 20%;
+                             display: flex;
+                             ">
+                        @match.StartTime.TimeOfDay
+                        @match.Class.Name
+                        Rnd: @match.Round;
+                        Dur: @match.Class.MatchDuration
+                        Ind: @match.matchScheduleIndex
+
+                    </div>
+                }
+
+
+            }
+
+
+
+        }
+    }*@
+
+
+
+

@@ -243,7 +243,7 @@ namespace SchedulerV3.Controllers
 
 
 
-            return View("Schedule", viewModal);
+            return View("Schedule2", viewModal);
 
 
             

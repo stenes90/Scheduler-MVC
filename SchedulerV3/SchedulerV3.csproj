@@ -202,6 +202,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MatchGenerator.cs" />
     <Compile Include="Migrations\202003031433038_initial.cs" />
     <Compile Include="Migrations\202003031433038_initial.Designer.cs">
       <DependentUpon>202003031433038_initial.cs</DependentUpon>
@@ -617,6 +618,7 @@
     <Content Include="Views\Tournament\Court.cshtml" />
     <Content Include="Views\Tournament\Times.cshtml" />
     <Content Include="Views\Tournament\Schedule.cshtml" />
+    <Content Include="Views\Tournament\Schedule2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

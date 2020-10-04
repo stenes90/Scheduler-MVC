@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
 using Itenso.TimePeriod;
 
 namespace SchedulerV3.Models
@@ -13,56 +12,16 @@ namespace SchedulerV3.Models
     public class Schedule
     {
         private ApplicationDbContext _context;
+        private MatchGenerator _generator;
+
         public Schedule()
         {
             _context = new ApplicationDbContext();
+            _generator = new MatchGenerator(_context);
         }
 
 
-        public List<Match> GenerateMatches(Tournament tournament)
-        {
-            var classes = _context.Classes
-                .Include(z => z.PlayingDates
-                .Select(x => x.Courts))
-                .Where(c => c.TournamentId == tournament.Id).ToList();
-
-            tournament.Classes = classes;
-
-            var matches = new List<Match>();
-            var maxRounds = classes.Select(c => c.NumberOfRounds).ToList().Max();
-            var actualRound = 1;
-            int i = 0;
-            while (maxRounds > 0)
-            {
-                for (i = 0; i < classes.Count; i++)
-                {
-                    var actualClass = classes[i];
-                    for (int j = 0; j < actualClass.MatchesPerRound; j++)
-                    {
-                        if (actualRound > actualClass.NumberOfRounds)
-                        {
-                            continue;
-                        }
-
-
-                        var match = new Match();
-                        match.Class = actualClass;
-                        match.Round = actualRound;
-                        match.IsScheduled = false;
-                        match.Tournament = tournament;
-                        matches.Add(match);
-                    }
-
-                }
-                actualRound++;
-                maxRounds--;
-
-
-            }
-
-            tournament.Matches = matches;
-            return matches;
-        }
+      
 
 
 
@@ -78,7 +37,7 @@ namespace SchedulerV3.Models
             //    .Where(c => c.TournamentId == tournament.Id).ToList();
 
 
-            var matches = GenerateMatches(tournament);
+            var matches = _generator.GenerateMatches(tournament);
             var scheduledMatches = matches.Where(c => c.IsScheduled == true).ToList();
             var notScheduledMatches = matches.Where(c => c.IsScheduled == false).ToList();
             int scheduleIndex = 1;
