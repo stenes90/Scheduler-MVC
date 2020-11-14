@@ -219,8 +219,30 @@ namespace SchedulerV3.Controllers
         }
 
 
-       
-        
+        public ActionResult GenerateMatches(Tournament tournament)
+        {
+            var tn = _context.Tournaments
+               .Include(c => c.Classes.Select(x => x.PlayingDates))
+               .SingleOrDefault(z => z.Id == tournament.Id);
+
+            var _generator = new MatchGenerator();
+            var matches = _generator.GenerateMatches(tn);
+            foreach (var item in matches.ToList())
+            {
+
+                tn.Matches.Add(item);
+                _context.Matches.Add(item);
+            }
+            _context.SaveChanges();
+            var viewModel = new TournamentViewModel();
+            viewModel.Tournament = tn;
+            viewModel.Classes = tn.Classes.ToList();
+
+            return View("Schedule2", viewModel);
+
+        }
+
+
         public ActionResult ScheduleMatches(Tournament tournament)
         {
             var tn = _context.Tournaments
@@ -230,34 +252,61 @@ namespace SchedulerV3.Controllers
             var schedule = new Schedule();
 
             var tnwithMatches = schedule.ScheduleMatches(tn);
+            //start
+
 
             //foreach (var item in tnwithMatches.Matches)
             //{
             //    var match = new Match();
-            //    //match.StartTime = new DateTime(item.StartTime.Year, item.StartTime.Month, item.StartTime.Day, item.StartTime.Hour, item.StartTime.Minute, item.StartTime.Second);
-            //    match.Class = item.Class;
-            //    match.Court = item.Court;
-            //    match.StartTime = item.StartTime;
-            //    //match.StartTime = item.StartTime.ToString("MMMM dd");
-            //    //match.StartTime = DateTime.Now;
-            //    match.MatchDuration = item.MatchDuration;
+            //    ////match.StartTime = new DateTime(item.StartTime.Year, item.StartTime.Month, item.StartTime.Day, item.StartTime.Hour, item.StartTime.Minute, item.StartTime.Second);
+            //    //match.Class = item.Class;
+            //    //match.Court = item.Court;
+            //    //match.StartTime = item.StartTime;
+            //    ////match.StartTime = item.StartTime.ToString("MMMM dd");
+            //    ////match.StartTime = DateTime.Now;
+            //    //match.MatchDuration = item.MatchDuration;
+
             //    _context.Matches.Add(match);
             //}
             //_context.SaveChanges();
             //var matchesInDb = _context.Matches.ToList();
 
+
+            // end
             var viewModal = new TournamentViewModel();
             viewModal.Tournament = tnwithMatches;
             viewModal.Classes = tnwithMatches.Classes.ToList();
 
-            return View("Schedule2", tnwithMatches);
+            return View("Schedule2", viewModal);
         }
 
-        //[HttpPost]
-        //public ActionResult SaveScheduleInDB()
-        //{
+        [HttpPost]
+        public ActionResult SaveScheduleInDB(Tournament tournament)
+        {
+            
+            var matchesInDb = _context.Matches.Where(c => c.TournamentId == tournament.Id).ToList();
+            foreach (var item in matchesInDb)
+            {
+                var match = tournament.Matches.SingleOrDefault(c => c.Id == item.Id);
+                item.StartTime = match.StartTime;
+                item.EndTime = match.EndTime;
+                item.PlayingDateId = match.PlayingDateId;
+                item.CourtId = match.CourtId;
+                item.MatchDuration = match.MatchDuration;
+                item.IsScheduled = true;
 
-        //}
+
+            }
+            _context.SaveChanges();
+            var tn = _context.Tournaments
+                .Include(c => c.Classes.Select(x => x.PlayingDates))
+                .SingleOrDefault(c => c.Id == tournament.Id);
+
+            var viewModel = new TournamentViewModel();
+            viewModel.Tournament = tn;
+            viewModel.Classes = tn.Classes.ToList();
+            return View("Schedule2", viewModel);
+        }
 
 
 
@@ -269,7 +318,7 @@ namespace SchedulerV3.Controllers
             var viewModel = new TournamentViewModel();
             viewModel.Tournament = tournament;
             viewModel.Classes = tournament.Classes.ToList();
-            return View(viewModel);
+            return View("Schedule2", viewModel);
         }
 
 

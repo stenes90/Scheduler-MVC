@@ -38,10 +38,11 @@ namespace SchedulerV3.Models
 
         public Tournament ScheduleMatches(Tournament tournament)
         {
-            
 
-            var _generator = new MatchGenerator();
-            var matches = _generator.GenerateMatches(tournament);
+
+            //var _generator = new MatchGenerator();
+            //var matches = _generator.GenerateMatches(tournament);
+            var matches = tournament.Matches;
             var scheduledMatches = matches.Where(c => c.IsScheduled == true).ToList();
             var notScheduledMatches = matches.Where(c => c.IsScheduled == false).ToList();
             int scheduleIndex = 1;
@@ -154,7 +155,7 @@ namespace SchedulerV3.Models
                     var smallestDate = listOfStartTimesForEachCourt.Min();
                     var indexOfSmallest = listOfStartTimesForEachCourt.IndexOf(smallestDate);
                     match.Court = listOfCourts[indexOfSmallest];
-                    //match.CourtId = listOfCourts[indexOfSmallest].Id;
+                    match.CourtId = listOfCourts[indexOfSmallest].Id;
                     //var courtNameeee = match.Court.Name.ToString();
                     //var classNameee = match.Class.Name.ToString();
                     listOfCourts[indexOfSmallest].Matches.Add(match);

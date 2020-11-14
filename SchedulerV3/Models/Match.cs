@@ -51,7 +51,7 @@ namespace SchedulerV3.Models
         public int? PlayingDateId { get; set; }
 
         [ForeignKey("PlayingDateId")]
-        public virtual PlayingDate PlayingDate { get; set; }
+        public PlayingDate PlayingDate { get; set; }
 
         public int matchScheduleIndex { get; set; }
 

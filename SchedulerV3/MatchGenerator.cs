@@ -46,7 +46,7 @@ namespace SchedulerV3.Models
                         match.Round = actualRound;
                         match.IsScheduled = false;
                         match.Tournament = tournament;
-                        //match.TournamentId = tournament.Id;
+                        match.TournamentId = tournament.Id;
                         matches.Add(match);
                     }
 

@@ -479,6 +479,10 @@
     <Compile Include="Migrations\202010200704110_updateMatchesModelToDateTime2.Designer.cs">
       <DependentUpon>202010200704110_updateMatchesModelToDateTime2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011141540215_forgeinKeysInMatchesModel.cs" />
+    <Compile Include="Migrations\202011141540215_forgeinKeysInMatchesModel.Designer.cs">
+      <DependentUpon>202011141540215_forgeinKeysInMatchesModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Class.cs" />
@@ -872,6 +876,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010200704110_updateMatchesModelToDateTime2.resx">
       <DependentUpon>202010200704110_updateMatchesModelToDateTime2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011141540215_forgeinKeysInMatchesModel.resx">
+      <DependentUpon>202011141540215_forgeinKeysInMatchesModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -25,6 +25,9 @@ namespace SchedulerV3.ViewModel
 
         public List<PlayingDate> PlayingDates { get; set; }
 
+        public List<Match> Matches { get; set; }
+
+
         //public List<DateTime> PlayingDatesStartHour { get; set; }
 
         //public List<DateTime> PlayingDatesEndHour { get; set; }
