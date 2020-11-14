@@ -451,6 +451,34 @@
     <Compile Include="Migrations\202004011548138_bool.Designer.cs">
       <DependentUpon>202004011548138_bool.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010191601289_MatchDurationAddedInMatchModel.cs" />
+    <Compile Include="Migrations\202010191601289_MatchDurationAddedInMatchModel.Designer.cs">
+      <DependentUpon>202010191601289_MatchDurationAddedInMatchModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010191634038_MatchModelForgeingKeysAdded.cs" />
+    <Compile Include="Migrations\202010191634038_MatchModelForgeingKeysAdded.Designer.cs">
+      <DependentUpon>202010191634038_MatchModelForgeingKeysAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010191647099_MatchModelForgeinKeysSetNullable.cs" />
+    <Compile Include="Migrations\202010191647099_MatchModelForgeinKeysSetNullable.Designer.cs">
+      <DependentUpon>202010191647099_MatchModelForgeinKeysSetNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010191730253_testMatchModel.cs" />
+    <Compile Include="Migrations\202010191730253_testMatchModel.Designer.cs">
+      <DependentUpon>202010191730253_testMatchModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010191813505_testMatchModel2.cs" />
+    <Compile Include="Migrations\202010191813505_testMatchModel2.Designer.cs">
+      <DependentUpon>202010191813505_testMatchModel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010192026507_testMatchModel3.cs" />
+    <Compile Include="Migrations\202010192026507_testMatchModel3.Designer.cs">
+      <DependentUpon>202010192026507_testMatchModel3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010200704110_updateMatchesModelToDateTime2.cs" />
+    <Compile Include="Migrations\202010200704110_updateMatchesModelToDateTime2.Designer.cs">
+      <DependentUpon>202010200704110_updateMatchesModelToDateTime2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Class.cs" />
@@ -458,6 +486,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\Model_2.cs" />
     <Compile Include="Models\PlayingDate.cs" />
     <Compile Include="Models\StartDateLowerThenEndDateValidation.cs" />
     <Compile Include="Models\Tournament.cs" />
@@ -822,6 +851,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004011548138_bool.resx">
       <DependentUpon>202004011548138_bool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010191601289_MatchDurationAddedInMatchModel.resx">
+      <DependentUpon>202010191601289_MatchDurationAddedInMatchModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010191634038_MatchModelForgeingKeysAdded.resx">
+      <DependentUpon>202010191634038_MatchModelForgeingKeysAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010191647099_MatchModelForgeinKeysSetNullable.resx">
+      <DependentUpon>202010191647099_MatchModelForgeinKeysSetNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010191730253_testMatchModel.resx">
+      <DependentUpon>202010191730253_testMatchModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010191813505_testMatchModel2.resx">
+      <DependentUpon>202010191813505_testMatchModel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010192026507_testMatchModel3.resx">
+      <DependentUpon>202010192026507_testMatchModel3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010200704110_updateMatchesModelToDateTime2.resx">
+      <DependentUpon>202010200704110_updateMatchesModelToDateTime2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

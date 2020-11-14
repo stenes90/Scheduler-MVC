@@ -26,6 +26,8 @@ namespace SchedulerV3.Models
         public DbSet<PlayingDate> PlayingDates { get; set; }
         public DbSet<Court> Courts { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Match_2> Matchovi { get; set; }
+
 
 
         public ApplicationDbContext()

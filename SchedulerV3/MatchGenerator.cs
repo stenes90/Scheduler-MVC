@@ -6,21 +6,22 @@ namespace SchedulerV3.Models
 {
     public class MatchGenerator
     {
-        private ApplicationDbContext _context;
+        //private ApplicationDbContext _context;
 
-        public MatchGenerator(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        //public MatchGenerator(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
 
         public List<Match> GenerateMatches(Tournament tournament)
         {
-            var classes = _context.Classes
-                .Include(z => z.PlayingDates
-                .Select(x => x.Courts))
-                .Where(c => c.TournamentId == tournament.Id).ToList();
+            //var classes = _context.Classes
+            //    .Include(z => z.PlayingDates
+            //    .Select(x => x.Courts))
+            //    .Where(c => c.TournamentId == tournament.Id).ToList();
 
-            tournament.Classes = classes;
+            //tournament.Classes = classes;
+            var classes = tournament.Classes.ToList();
 
             var matches = new List<Match>();
             var maxRounds = classes.Select(c => c.NumberOfRounds).ToList().Max();
@@ -41,9 +42,11 @@ namespace SchedulerV3.Models
 
                         var match = new Match();
                         match.Class = actualClass;
+                        //match.ClassId = actualClass.Id;
                         match.Round = actualRound;
                         match.IsScheduled = false;
                         match.Tournament = tournament;
+                        //match.TournamentId = tournament.Id;
                         matches.Add(match);
                     }
 

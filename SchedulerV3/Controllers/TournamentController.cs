@@ -85,7 +85,7 @@ namespace SchedulerV3.Controllers
                     playingDate.Tournament = tournament;
                     _context.PlayingDates.Add(playingDate);
                     _context.SaveChanges();
-                    var playingDatesInDB = _context.PlayingDates.Where(x =>x.Tournament.Id == tournament.Id).ToList();
+                    var playingDatesInDB = _context.PlayingDates.Where(x => x.Tournament.Id == tournament.Id).ToList();
                 }
 
 
@@ -219,35 +219,47 @@ namespace SchedulerV3.Controllers
         }
 
 
-
+       
+        
         public ActionResult ScheduleMatches(Tournament tournament)
         {
             var tn = _context.Tournaments
                 .Include(c => c.Classes.Select(x => x.PlayingDates))
                 .SingleOrDefault(z => z.Id == tournament.Id);
 
-            //var classes = _context.Classes
-            //    .Include(z => z.PlayingDates
-            //    .Select(x => x.Courts))
-            //    .Where(c => c.TournamentId == tournament.Id).ToList();
-
             var schedule = new Schedule();
-           
+
             var tnwithMatches = schedule.ScheduleMatches(tn);
-            var breaks = schedule.BreakTimeRanges(tn);
+
+            //foreach (var item in tnwithMatches.Matches)
+            //{
+            //    var match = new Match();
+            //    //match.StartTime = new DateTime(item.StartTime.Year, item.StartTime.Month, item.StartTime.Day, item.StartTime.Hour, item.StartTime.Minute, item.StartTime.Second);
+            //    match.Class = item.Class;
+            //    match.Court = item.Court;
+            //    match.StartTime = item.StartTime;
+            //    //match.StartTime = item.StartTime.ToString("MMMM dd");
+            //    //match.StartTime = DateTime.Now;
+            //    match.MatchDuration = item.MatchDuration;
+            //    _context.Matches.Add(match);
+            //}
+            //_context.SaveChanges();
+            //var matchesInDb = _context.Matches.ToList();
 
             var viewModal = new TournamentViewModel();
             viewModal.Tournament = tnwithMatches;
             viewModal.Classes = tnwithMatches.Classes.ToList();
 
-
-
-
-            return View("Schedule2", viewModal);
-
-
-            
+            return View("Schedule2", tnwithMatches);
         }
+
+        //[HttpPost]
+        //public ActionResult SaveScheduleInDB()
+        //{
+
+        //}
+
+
 
         public ActionResult Schedule(int id)
         {

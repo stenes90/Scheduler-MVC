@@ -11,57 +11,62 @@ namespace SchedulerV3.Models
 {
     public class Schedule
     {
-        private ApplicationDbContext _context;
-        private MatchGenerator _generator;
+        //private ApplicationDbContext _context;
+        //private MatchGenerator _generator;
 
-        public Schedule()
-        {
-            _context = new ApplicationDbContext();
-            _generator = new MatchGenerator(_context);
-        }
+        //public Schedule()
+        //{
+        //    _context = new ApplicationDbContext();
+        //    _generator = new MatchGenerator(_context);
+        //}
 
 
-      
+        //private ApplicationDbContext _context;
+        //public Schedule()
+        //{
+        //    _context = new ApplicationDbContext();
+        //}
+        //protected override void Dispose(bool disposing)
+        //{
+        //    _context.Dispose();
+        //}
+
+
+
 
 
 
         public Tournament ScheduleMatches(Tournament tournament)
         {
-            //var tn = _context.Tournaments
-            //    .Include(c => c.Classes.Select(x => x.PlayingDates))
-            //    .SingleOrDefault(z => z.Id == tournament.Id);
+            
 
-            //var classes = _context.Classes
-            //    .Include(z => z.PlayingDates
-            //    .Select(x => x.Courts))
-            //    .Where(c => c.TournamentId == tournament.Id).ToList();
-
-
+            var _generator = new MatchGenerator();
             var matches = _generator.GenerateMatches(tournament);
             var scheduledMatches = matches.Where(c => c.IsScheduled == true).ToList();
             var notScheduledMatches = matches.Where(c => c.IsScheduled == false).ToList();
             int scheduleIndex = 1;
             var listOfScheduledMatches = new List<Match>();
-            foreach (var date in tournament.PlayingDates)
+            foreach (var actualDate in tournament.PlayingDates)
             {
                 scheduledMatches = matches.Where(c => c.IsScheduled == true).ToList();
                 notScheduledMatches = matches.Where(c => c.IsScheduled == false).ToList();
-                var listOfCourts = date.Courts.ToList();
-                var endTime = date.EndTime;
-                var classesForDate = date.Classes;
-                var matchesForDate = matches.Where(c => c.Class.PlayingDates.Contains(date)).ToList()
+                var listOfCourts = actualDate.Courts.ToList();
+                var endTime = actualDate.EndTime;
+                var classesForDate = actualDate.Classes;
+                var matchesForDate = matches.Where(c => c.Class.PlayingDates.Contains(actualDate)).ToList()
                     .Where(x => x.IsScheduled == false).ToList();
 
                 var matchIndex = 0;
                 foreach (var match in notScheduledMatches)
                 {
                     matchIndex++;
+                    match.matchScheduleIndex = matchIndex;
                     var nextAvailableTimeForClassMatch = new DateTime();
                     try
                     {
                         var lastScheduledMatchFromSameClassForPreviousRound =
                         listOfScheduledMatches.Where(c => c.Round == (match.Round - 1))
-                        .Where(x => x.Class == (match.Class)).Where(z =>z.PlayingDate == date).ToList().Last();
+                        .Where(x => x.Class == (match.Class)).Where(z =>z.PlayingDate == actualDate).ToList().Last();
                         nextAvailableTimeForClassMatch = lastScheduledMatchFromSameClassForPreviousRound.EndTime.AddMinutes(match.Class.BreakBetweenMatches);
                     }
                     catch (Exception)
@@ -69,13 +74,13 @@ namespace SchedulerV3.Models
                         var banana = 0;
                     }
                     var listOfStartTimesForEachCourt = new List<DateTime>();
-                    foreach (var court in date.Courts)
+                    foreach (var court in actualDate.Courts)
                     {
                         var checkTime = new TimeRange();
-                        checkTime.Start = date.StartTime.AddMinutes(1);
+                        checkTime.Start = actualDate.StartTime.AddMinutes(1);
                         checkTime.End = checkTime.Start.AddSeconds(16);
 
-                        var scheduledMatchesForCourt = court.Matches.Where(c => c.IsScheduled).Where(x =>x.PlayingDate == date).ToList();
+                        var scheduledMatchesForCourt = court.Matches.Where(c => c.IsScheduled).Where(x =>x.PlayingDate == actualDate).ToList();
                         var listOfMatchTimeRangesForCourt = new List<TimeRange>();
                         var courtName = court.Name;
                         foreach (var item in scheduledMatchesForCourt)
@@ -83,11 +88,11 @@ namespace SchedulerV3.Models
                             listOfMatchTimeRangesForCourt.Add(item.Timerange());
                         }
 
-                        while (checkTime.End.TimeOfDay < date.EndTime.TimeOfDay)
+                        while (checkTime.End.TimeOfDay < actualDate.EndTime.TimeOfDay)
                         {
                             if (scheduledMatchesForCourt.Count == 0)
                             {
-                                match.StartTime = date.StartTime;
+                                match.StartTime = actualDate.StartTime;
                                 listOfStartTimesForEachCourt.Add(match.StartTime);
                                 break;
                             }
@@ -149,16 +154,19 @@ namespace SchedulerV3.Models
                     var smallestDate = listOfStartTimesForEachCourt.Min();
                     var indexOfSmallest = listOfStartTimesForEachCourt.IndexOf(smallestDate);
                     match.Court = listOfCourts[indexOfSmallest];
-                    var courtNameeee = match.Court.Name.ToString();
-                    var classNameee = match.Class.Name.ToString();
+                    //match.CourtId = listOfCourts[indexOfSmallest].Id;
+                    //var courtNameeee = match.Court.Name.ToString();
+                    //var classNameee = match.Class.Name.ToString();
                     listOfCourts[indexOfSmallest].Matches.Add(match);
-                    match.PlayingDate = date;
-                    match.Date = date.Date;
-                    date.Matches.Add(match);
+                    match.PlayingDate = actualDate;
+                    match.Date = actualDate.Date;
+                    actualDate.Matches.Add(match);
                     match.StartTime = smallestDate;
                     match.EndTime = match.StartTime.AddMinutes(match.Class.MatchDuration);
+                    match.MatchDuration = match.Class.MatchDuration;
                     match.IsScheduled = true;
                     match.Tournament = tournament;
+                    
                     listOfScheduledMatches.Add(match);
 
                     var matchesForCourtThatNeedToBeMoved = matches.Where(c => c.Court == listOfCourts[indexOfSmallest]).ToList().Where(x => x.StartTime > match.StartTime).ToList();
