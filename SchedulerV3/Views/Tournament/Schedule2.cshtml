@@ -126,7 +126,9 @@
                 @for (int i = 0; i < fiveMinColCount; i++)
                 {
 
-                    <div class="col-fiveMin" data-time="@startTime" data-time-index="@i" style="border: 0.5px solid black;
+                    <div class="col-fiveMin" data-time="@startTime" data-time-index="@i"
+                         date-dateTimeId="@date.Id" date-courtId="@court.Id"
+                         style="border: 0.5px solid black;
         width: @(fiveMinColwidth + "vw") !important;
         float: left;
         font-weight: bold;
@@ -146,25 +148,31 @@
                 }
 
                 @foreach (var match in actualCourtMatches)
-                {
-                    var matchDuration = match.Timerange().Duration.Minutes;
-                    var matchWidth = (matchDuration / 5) * fiveMinColwidth;
-                    var matchFiveMinFieldsCovering = matchDuration / 5;  // shows how many 5min fields it covers
-                                                                         //var matchPositionLeft = (match.StartTime - date.StartTime).TotalMinutes / 5 * fiveMinColwidth;
-                    var matchPositionLeft = (decimal)(match.StartTime - date.StartTime).TotalMinutes;
-                    matchPositionLeft = (matchPositionLeft / 5) * fiveMinColwidth;
-                    if (!match.IsScheduled)
                     {
-                        continue;
-                    }
-                    else
-                    {
-                        var matchClassIndex = Model.Classes.IndexOf(match.Class);
+                        var matchDuration = match.Timerange().Duration.Minutes;
+                        var matchWidth = (matchDuration / 5) * fiveMinColwidth;
+                        var matchFiveMinFieldsCovering = matchDuration / 5;  // shows how many 5min fields it covers
+                                                                             //var matchPositionLeft = (match.StartTime - date.StartTime).TotalMinutes / 5 * fiveMinColwidth;
+                        var matchPositionLeft = (decimal)(match.StartTime - date.StartTime).TotalMinutes;
+                        matchPositionLeft = (matchPositionLeft / 5) * fiveMinColwidth;
+                        if (!match.IsScheduled)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            var matchClassIndex = Model.Classes.IndexOf(match.Class);
+                            var endTime = match.StartTime.AddMinutes(match.MatchDuration);
                         //var matchClassIndex = Model.Classes.ToList().IndexOf(match.Class);
 
 
-                        <div class="match-div" data-time="@match.StartTime" data-matchId="@match.Id" data-fields-covering="@matchFiveMinFieldsCovering" data-court="@court.Id" style="background-color:
-                                     @(listOfColor[matchClassIndex]) ;
+                        <div class="match-div" data-time="@match.StartTime" data-matchId="@match.Id"
+                             data-fields-covering="@matchFiveMinFieldsCovering" data-court="@court.Id"
+                             data-playingDateId="@date.Id"  data-EndTime="@endTime" data-duration="@match.MatchDuration"
+                             data-classId="@match.ClassId"
+
+                             
+                             style="background-color:@(listOfColor[matchClassIndex]);
                                     position: absolute;
                                     left: @(matchPositionLeft + "vw");
                                     width: @(matchWidth + "vw");
@@ -205,7 +213,7 @@
 }
 
 
-@if (Model.Tournament.Matches.Count != 0)
+@*@if (Model.Tournament.Matches.Count != 0)
 {
     using (Html.BeginForm("SaveScheduleInDB", "Tournament", FormMethod.Post))
     {
@@ -234,8 +242,10 @@
             <button type="submit">Save Schedule</button>
         }
     }
-}
+}*@
 
+
+    <button id="save-schedule">Save Schedule</button>
 
 @section Scripts{
 
@@ -503,9 +513,13 @@
                matchCoppied = false;
                //Updating the time fields that the match is covering after paste
                coppiedMatch.setAttribute("data-time", col.getAttribute("data-time"));
+               coppiedMatch.setAttribute("data-court", col.getAttribute("date-courtid"));
                coppiedMatch.indexOfFirstField = parseInt(ghost.getAttribute("indexOfFirstField"));
                coppiedMatch.indexOfLastField = coppiedMatch.indexOfFirstField + coppiedMatch.matchTimeFields.length - 1;
+               let lastColForMarch = Array.from(fiveMinColsForCourt).find(c => c.getAttribute("data-time-index") == coppiedMatch.indexOfLastField+1);
+               coppiedMatch.setAttribute("data-EndTime", lastColForMarch.getAttribute("data-time"));
                let initialTimeIndex = coppiedMatch.indexOfFirstField;
+               debugger;
                for (i = 0; i < coppiedMatch.matchTimeFields.length; i++) {
                    coppiedMatch.matchTimeFields[i] = initialTimeIndex;
                    initialTimeIndex++;
@@ -525,7 +539,6 @@
                    let emptyFields = emptyFieldsBeforeMatchStart(actualMatch, matchesForCourt);
                    //firstIntersectedMatch is the intersected match with smallest start time
                    if (emptyFields < matchMovement && (actualMatch.matchTimeFields[0] >= firstIntersectedMatch.matchTimeFields[0])) {
-                       debugger;
                        let move = parseFloat(actualMatch.style.left.slice(0, -2)) + ((matchMovement - emptyFields) * timeSlotWidth);
                        actualMatch.style.left = move + "vw";
                        actualMatch.indexOfFirstField += matchMovement - emptyFields;
@@ -535,15 +548,63 @@
                            actualMatch.matchTimeFields[j] += matchMovement - emptyFields;
                        }
                    }
+                   //debugger;
+
+                   let firstCol = Array.from(fiveMinColsForCourt).find(c => c.getAttribute("data-time-index") == actualMatch.indexOfFirstField);
+                   let lastCol = Array.from(fiveMinColsForCourt).find(c => c.getAttribute("data-time-index") == actualMatch.indexOfLastField+1);
+                   let cheee = firstCol.getAttribute("date-courtid");
+                   actualMatch.setAttribute("data-time", firstCol.getAttribute("data-time"));
+                   actualMatch.setAttribute("data-court", firstCol.getAttribute("date-courtid"));
+                   actualMatch.setAttribute("data-EndTime", lastCol.getAttribute("data-time"));
+
                }
 
            })
 
 
-        function updateAllMatchTimes() {
-            let matches = document.querySelectorAll(".match-div");
-            console.log(matches);
-        }
+        
+                @*<input type="hidden" name="Tournament.Matches[@i].Id" value="@matches[i].Id" />
+                //<input type="hidden" name="Tournament.Matches[@i].ClassId" value="@matches[@i].Class.Id" />
+                <input type="hidden" name="Tournament.Matches[@i].CourtId" value="@matches[@i].Court.Id" />
+                <input type="hidden" name="Tournament.Matches[@i].PlayingDateId" value="@matches[@i].PlayingDate.Id" />
+                <input type="hidden" name="Tournament.Matches[@i].StartTime" value="@matches[@i].StartTime" />
+                <input type="hidden" name="Tournament.Matches[@i].EndTime" value="@matches[@i].EndTime" />
+                <input type="hidden" name="Tournament.Matches[@i].MatchDuration" value="@matches[@i].MatchDuration" />*@
+
+
+
+
+                document.getElementById("save-schedule").addEventListener("click", function () {
+                    let matchElements = document.querySelectorAll(".match-div");
+                    let matchObjects = [];
+
+                    debugger;
+
+                    for (let i = 0; i < matchElements.length; i++) {
+                        //let match = { Id: '', startTime: '', duration: '', endTime: '', courtId: '', playingDateId: '' };
+                        let match = {};
+                        match.TournamentId = @Model.Tournament.Id;
+                        match.Id = matchElements[i].getAttribute("data-matchid");
+                        match.StartTime = matchElements[i].getAttribute("data-time");
+                        match.MatchDuration = matchElements[i].getAttribute("data-duration");
+                        match.EndTime = matchElements[i].getAttribute("data-endtime");
+                        match.CourtId = matchElements[i].getAttribute("data-court");
+                        match.PlayingDateId = matchElements[i].getAttribute("data-playingdateid");
+                       // match.ClassId = matchElements[i].getAttribute("data-classId")
+                        matchObjects.push(match);
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '/Tournament/SaveScheduleInDB',
+                        data: JSON.stringify(matchObjects)
+                    });
+                });
+
+
+
+
 
            //checks intersection of coppied match and all other matches for court.
            //Detects the intersection match with lowest start time.

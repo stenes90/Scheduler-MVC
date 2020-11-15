@@ -280,14 +280,43 @@ namespace SchedulerV3.Controllers
             return View("Schedule2", viewModal);
         }
 
+        //[HttpPost]
+        //public ActionResult SaveScheduleInDB(Tournament tournament)
+        //{
+
+        //    var matchesInDb = _context.Matches.Where(c => c.TournamentId == tournament.Id).ToList();
+        //    foreach (var item in matchesInDb)
+        //    {
+        //        var match = tournament.Matches.SingleOrDefault(c => c.Id == item.Id);
+        //        item.StartTime = match.StartTime;
+        //        item.EndTime = match.EndTime;
+        //        item.PlayingDateId = match.PlayingDateId;
+        //        item.CourtId = match.CourtId;
+        //        item.MatchDuration = match.MatchDuration;
+        //        item.IsScheduled = true;
+
+
+        //    }
+        //    _context.SaveChanges();
+        //    var tn = _context.Tournaments
+        //        .Include(c => c.Classes.Select(x => x.PlayingDates))
+        //        .SingleOrDefault(c => c.Id == tournament.Id);
+
+        //    var viewModel = new TournamentViewModel();
+        //    viewModel.Tournament = tn;
+        //    viewModel.Classes = tn.Classes.ToList();
+        //    return View("Schedule2", viewModel);
+        //}
+
         [HttpPost]
-        public ActionResult SaveScheduleInDB(Tournament tournament)
+        public ActionResult SaveScheduleInDB(List<Match> matches)
         {
-            
-            var matchesInDb = _context.Matches.Where(c => c.TournamentId == tournament.Id).ToList();
+
+            var tournamentId = matches[0].TournamentId;
+            var matchesInDb = _context.Matches.Where(c => c.TournamentId == tournamentId).ToList();
             foreach (var item in matchesInDb)
             {
-                var match = tournament.Matches.SingleOrDefault(c => c.Id == item.Id);
+                var match = matches.SingleOrDefault(c => c.Id == item.Id);
                 item.StartTime = match.StartTime;
                 item.EndTime = match.EndTime;
                 item.PlayingDateId = match.PlayingDateId;
@@ -300,7 +329,7 @@ namespace SchedulerV3.Controllers
             _context.SaveChanges();
             var tn = _context.Tournaments
                 .Include(c => c.Classes.Select(x => x.PlayingDates))
-                .SingleOrDefault(c => c.Id == tournament.Id);
+                .SingleOrDefault(c => c.Id == tournamentId);
 
             var viewModel = new TournamentViewModel();
             viewModel.Tournament = tn;
