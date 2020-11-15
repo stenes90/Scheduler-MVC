@@ -34,6 +34,8 @@
     <button type="submit">Schedule All</button>
 }
 
+<button id="undoTimetable">Undo</button>
+
 @{
     var tournament = Model.Tournament;
     var playingDates = tournament.PlayingDates.ToList();
@@ -97,38 +99,38 @@
 @{
     decimal fiveWidth = 0;
 }
+<div id="timetable">
+    @foreach (var date in playingDates)
+    {
+        if (date.Matches.Count == 0) { continue; }
+        var startTimeForDate = date.StartTime;
+        var actualDateMatches = date.Matches.OrderBy(c => c.StartTime.TimeOfDay).ToList();
+        var smallestMatchDuration = actualDateMatches.Min(c => c.Timerange().Duration.Minutes);
+        var minAvailableForDate = 1440 - (startTimeForDate.Hour * 60 + startTimeForDate.Minute);
+        var fiveMinColCount = minAvailableForDate / 5;
+        var fiveMinColwidth = ((decimal)10 / (smallestMatchDuration / 5));
+        fiveWidth = fiveMinColwidth;
+        var scrollerWidth = (fiveMinColCount * fiveMinColwidth);
+        var startTime = startTimeForDate;
 
-@foreach (var date in playingDates)
-{
-    if (date.Matches.Count == 0) { continue; }
-    var startTimeForDate = date.StartTime;
-    var actualDateMatches = date.Matches.OrderBy(c => c.StartTime.TimeOfDay).ToList();
-    var smallestMatchDuration = actualDateMatches.Min(c => c.Timerange().Duration.Minutes);
-    var minAvailableForDate = 1440 - (startTimeForDate.Hour * 60 + startTimeForDate.Minute);
-    var fiveMinColCount = minAvailableForDate / 5;
-    var fiveMinColwidth = ((decimal)10 / (smallestMatchDuration / 5));
-    fiveWidth = fiveMinColwidth;
-    var scrollerWidth = (fiveMinColCount * fiveMinColwidth);
-    var startTime = startTimeForDate;
 
+        <h3>@date.Date</h3>
+        var actualDateCourts = date.Courts.ToList();
+        var timetableHeight = actualDateCourts.Count * 100;
+        var fiveMinColHeight = (decimal)100 / actualDateCourts.Count;
 
-    <h3>@date.Date</h3>
-    var actualDateCourts = date.Courts.ToList();
-    var timetableHeight = actualDateCourts.Count * 100;
-    var fiveMinColHeight = (decimal)100 / actualDateCourts.Count;
-
-    <div class="container-fluid container-scroll" style="overflow-x: auto;
+        <div class="container-fluid container-scroll" style="overflow-x: auto;
         position: relative;
         height: @(timetableHeight +"px");">
-        @foreach (var court in actualDateCourts)
-        {
-            <div class="row columns court-div" style="width: @(scrollerWidth + "vw"); height: @(fiveMinColHeight + "%"); position: relative;">
-                @for (int i = 0; i < fiveMinColCount; i++)
-                {
+            @foreach (var court in actualDateCourts)
+            {
+                <div class="row columns court-div" style="width: @(scrollerWidth + "vw"); height: @(fiveMinColHeight + "%"); position: relative;">
+                    @for (int i = 0; i < fiveMinColCount; i++)
+                    {
 
-                    <div class="col-fiveMin" data-time="@startTime" data-time-index="@i"
-                         date-dateTimeId="@date.Id" date-courtId="@court.Id"
-                         style="border: 0.5px solid black;
+                        <div class="col-fiveMin" data-time="@startTime" data-time-index="@i"
+                             date-dateTimeId="@date.Id" date-courtId="@court.Id"
+                             style="border: 0.5px solid black;
         width: @(fiveMinColwidth + "vw") !important;
         float: left;
         font-weight: bold;
@@ -142,12 +144,12 @@
             startTime = startTimeForDate;
         }
     }
-                @{
+                    @{
 
-                    var actualCourtMatches = court.Matches.Where(c => c.PlayingDate == date).OrderBy(c => c.StartTime.TimeOfDay).ToList();
-                }
+                        var actualCourtMatches = court.Matches.Where(c => c.PlayingDate == date).OrderBy(c => c.StartTime.TimeOfDay).ToList();
+                    }
 
-                @foreach (var match in actualCourtMatches)
+                    @foreach (var match in actualCourtMatches)
                     {
                         var matchDuration = match.Timerange().Duration.Minutes;
                         var matchWidth = (matchDuration / 5) * fiveMinColwidth;
@@ -163,16 +165,14 @@
                         {
                             var matchClassIndex = Model.Classes.IndexOf(match.Class);
                             var endTime = match.StartTime.AddMinutes(match.MatchDuration);
-                        //var matchClassIndex = Model.Classes.ToList().IndexOf(match.Class);
+                            //var matchClassIndex = Model.Classes.ToList().IndexOf(match.Class);
 
 
-                        <div class="match-div" data-time="@match.StartTime" data-matchId="@match.Id"
-                             data-fields-covering="@matchFiveMinFieldsCovering" data-court="@court.Id"
-                             data-playingDateId="@date.Id"  data-EndTime="@endTime" data-duration="@match.MatchDuration"
-                             data-classId="@match.ClassId"
-
-                             
-                             style="background-color:@(listOfColor[matchClassIndex]);
+                            <div class="match-div" data-time="@match.StartTime" data-matchId="@match.Id"
+                                 data-fields-covering="@matchFiveMinFieldsCovering" data-court="@court.Id"
+                                 data-playingDateId="@date.Id" data-EndTime="@endTime" data-duration="@match.MatchDuration"
+                                 data-classId="@match.ClassId"
+                                 style="background-color:@(listOfColor[matchClassIndex]);
                                     position: absolute;
                                     left: @(matchPositionLeft + "vw");
                                     width: @(matchWidth + "vw");
@@ -182,70 +182,70 @@
                         font-size: 10px;
                         border: black solid 1px;
                             ">
-                            <p style="padding: 0px; margin: 0px;">@match.StartTime.TimeOfDay</p>
-                            <p style="padding: 0px; margin: 0px;">@match.matchScheduleIndex</p>
-                            <p style="padding: 0px; margin: 0px;">@match.Class.Name</p>
-                            <p style="padding: 0px; margin: 0px;">Rnd: @match.Round;</p>
-                            <p style="padding: 0px; margin: 0px;">Dur: @match.Class.MatchDuration</p>
-                        </div>
+                                <p style="padding: 0px; margin: 0px;">@match.StartTime.TimeOfDay</p>
+                                <p style="padding: 0px; margin: 0px;">@match.matchScheduleIndex</p>
+                                <p style="padding: 0px; margin: 0px;">@match.Class.Name</p>
+                                <p style="padding: 0px; margin: 0px;">Rnd: @match.Round;</p>
+                                <p style="padding: 0px; margin: 0px;">Dur: @match.Class.MatchDuration</p>
+                            </div>
+                        }
+
+
                     }
 
 
-                }
 
 
 
 
+                </div>
+            }
+        </div>
 
+        <div id="menu" style="height: 25px; width:70px; text-align:center; visibility: hidden;  opacity: 0; background-color: white; border: 1px solid black; border-radius: 5px; position:relative">
+            <a style="text-decoration: solid; color: black; cursor: pointer">Move</a>
 
-            </div>
-        }
-    </div>
-
-    <div id="menu" style="height: 25px; width:70px; text-align:center; visibility: hidden;  opacity: 0; background-color: white; border: 1px solid black; border-radius: 5px; position:relative">
-        <a style="text-decoration: solid; color: black; cursor: pointer">Move</a>
-
-    </div>
-    <div id="paste" style="height: 25px; width:70px; text-align:center; visibility: hidden;  opacity: 0; background-color: white; border: 1px solid black; border-radius: 5px">
-        <a style="text-decoration: solid; color: black; cursor:pointer">Paste</a>
-        <span id="close-menu" style="position: absolute; font-size: 11px; right: 5px; top: -3px; cursor: pointer">x</span>
-    </div>
-}
-
+        </div>
+        <div id="paste" style="height: 25px; width:70px; text-align:center; visibility: hidden;  opacity: 0; background-color: white; border: 1px solid black; border-radius: 5px">
+            <a style="text-decoration: solid; color: black; cursor:pointer">Paste</a>
+            <span id="close-menu" style="position: absolute; font-size: 11px; right: 5px; top: -3px; cursor: pointer">x</span>
+        </div>
+    }
+</div>
 
 @*@if (Model.Tournament.Matches.Count != 0)
-{
-    using (Html.BeginForm("SaveScheduleInDB", "Tournament", FormMethod.Post))
     {
-        //@Html.HiddenFor(c=>c.Id)
-        @Html.HiddenFor(c => Model.Tournament.Id)
-        if (Model.Tournament.Matches.ToList()[0].PlayingDate != null)
+        using (Html.BeginForm("SaveScheduleInDB", "Tournament", FormMethod.Post))
         {
-
-
-
-
-            for (int i = 0; i < Model.Tournament.Matches.Count; i++)
+            //@Html.HiddenFor(c=>c.Id)
+            @Html.HiddenFor(c => Model.Tournament.Id)
+            if (Model.Tournament.Matches.ToList()[0].PlayingDate != null)
             {
-                <input type="hidden" name="Tournament.Matches[@i].Id" value="@matches[i].Id" />
-                //<input type="hidden" name="Tournament.Matches[@i].ClassId" value="@matches[@i].Class.Id" />
-                <input type="hidden" name="Tournament.Matches[@i].CourtId" value="@matches[@i].Court.Id" />
-                <input type="hidden" name="Tournament.Matches[@i].PlayingDateId" value="@matches[@i].PlayingDate.Id" />
-                <input type="hidden" name="Tournament.Matches[@i].StartTime" value="@matches[@i].StartTime" />
-                <input type="hidden" name="Tournament.Matches[@i].EndTime" value="@matches[@i].EndTime" />
-                <input type="hidden" name="Tournament.Matches[@i].MatchDuration" value="@matches[@i].MatchDuration" />
 
 
 
 
+                for (int i = 0; i < Model.Tournament.Matches.Count; i++)
+                {
+                    <input type="hidden" name="Tournament.Matches[@i].Id" value="@matches[i].Id" />
+                    //<input type="hidden" name="Tournament.Matches[@i].ClassId" value="@matches[@i].Class.Id" />
+                    <input type="hidden" name="Tournament.Matches[@i].CourtId" value="@matches[@i].Court.Id" />
+                    <input type="hidden" name="Tournament.Matches[@i].PlayingDateId" value="@matches[@i].PlayingDate.Id" />
+                    <input type="hidden" name="Tournament.Matches[@i].StartTime" value="@matches[@i].StartTime" />
+                    <input type="hidden" name="Tournament.Matches[@i].EndTime" value="@matches[@i].EndTime" />
+                    <input type="hidden" name="Tournament.Matches[@i].MatchDuration" value="@matches[@i].MatchDuration" />
+
+
+
+
+                }
+                <button type="submit">Save Schedule</button>
             }
-            <button type="submit">Save Schedule</button>
         }
-    }
-}*@
+    }*@
 
 
-    <button id="save-schedule">Save Schedule</button>
+<button id="save-schedule">Save Schedule</button>
 
 @section Scripts{
 
@@ -261,6 +261,14 @@
            let firstIntersectedMatch;
            let timeSlotWidth = @fiveWidth;
            let timeSlotWidthDifference;
+        let timetableVersions = [];
+        let timetableVersionIndex = 0;
+        let currentTimetableVersion = document.querySelector(".container-fluid").outerHTML;
+        let timetableParentElement = document.getElementById("timetable");
+
+
+
+        timetableVersions.push(document.querySelector(".container-fluid").outerHTML);
 
 
 
@@ -548,32 +556,43 @@
                            actualMatch.matchTimeFields[j] += matchMovement - emptyFields;
                        }
                    }
-                   //debugger;
-
                    let firstCol = Array.from(fiveMinColsForCourt).find(c => c.getAttribute("data-time-index") == actualMatch.indexOfFirstField);
                    let lastCol = Array.from(fiveMinColsForCourt).find(c => c.getAttribute("data-time-index") == actualMatch.indexOfLastField+1);
-                   let cheee = firstCol.getAttribute("date-courtid");
                    actualMatch.setAttribute("data-time", firstCol.getAttribute("data-time"));
                    actualMatch.setAttribute("data-court", firstCol.getAttribute("date-courtid"));
                    actualMatch.setAttribute("data-EndTime", lastCol.getAttribute("data-time"));
-
                }
-
+               debugger;
+               timetableVersionIndex++;
+               timetableVersions.push(document.querySelector(".container-fluid").outerHTML);
+               currentTimetableVersion = document.querySelector(".container-fluid");
            })
 
-
         
-                @*<input type="hidden" name="Tournament.Matches[@i].Id" value="@matches[i].Id" />
-                //<input type="hidden" name="Tournament.Matches[@i].ClassId" value="@matches[@i].Class.Id" />
-                <input type="hidden" name="Tournament.Matches[@i].CourtId" value="@matches[@i].Court.Id" />
-                <input type="hidden" name="Tournament.Matches[@i].PlayingDateId" value="@matches[@i].PlayingDate.Id" />
-                <input type="hidden" name="Tournament.Matches[@i].StartTime" value="@matches[@i].StartTime" />
-                <input type="hidden" name="Tournament.Matches[@i].EndTime" value="@matches[@i].EndTime" />
-                <input type="hidden" name="Tournament.Matches[@i].MatchDuration" value="@matches[@i].MatchDuration" />*@
+        let formatedTimetables = [];
+        function formatedTimetableVersions() {
+            for (item of timetableVersions) {
+                formatedTimetables.push(new DOMParser().parseFromString(item, "text/html").querySelector(".container-fluid"))
+            }
+        }
+
+        debugger;
+        document.getElementById("undoTimetable").addEventListener("click", function () {
+            if (timetableVersionIndex>0) {
+
+            currentTimetableVersion.remove();
+            let timetableeee = new DOMParser().parseFromString(timetableVersions[timetableVersionIndex-1], "text/html").querySelector(".container-fluid");
+            debugger;
+            timetableParentElement.appendChild(timetableeee)
+            timetableVersionIndex--;
+            currentTimetableVersion = document.querySelector(".container-fluid");
+            }
+        })
 
 
 
 
+                //Saving timetable changes in DB
                 document.getElementById("save-schedule").addEventListener("click", function () {
                     let matchElements = document.querySelectorAll(".match-div");
                     let matchObjects = [];
@@ -590,7 +609,6 @@
                         match.EndTime = matchElements[i].getAttribute("data-endtime");
                         match.CourtId = matchElements[i].getAttribute("data-court");
                         match.PlayingDateId = matchElements[i].getAttribute("data-playingdateid");
-                       // match.ClassId = matchElements[i].getAttribute("data-classId")
                         matchObjects.push(match);
                     }
 
@@ -671,8 +689,17 @@
                        emptyFieldsForCourt.push(j);
                    }
                }
-               let emptyFieldsBetweenCoppiedAndActualMatch = emptyFieldsForCourt.filter(c => c >= firstIntersectedMatch.indexOfFirstField && c < match.indexOfFirstField)
-               let noOfEmptyFields = emptyFieldsBetweenCoppiedAndActualMatch.length;
+               let noOfEmptyFields;
+               if (typeof firstIntersectedMatch !== "undefined") {
+                   let emptyFieldsBetweenCoppiedAndActualMatch = emptyFieldsForCourt.filter(c => c >= firstIntersectedMatch.indexOfFirstField && c < match.indexOfFirstField)
+                   noOfEmptyFields = emptyFieldsBetweenCoppiedAndActualMatch.length;
+               }
+               else {
+                   let emptyFieldsBetweenCoppiedAndActualMatch = null;
+                   noOfEmptyFields = 99999999999;
+
+               }
+               //let noOfEmptyFields = emptyFieldsBetweenCoppiedAndActualMatch.length;
                return noOfEmptyFields;
 
 
