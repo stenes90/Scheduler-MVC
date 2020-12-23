@@ -58,8 +58,13 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -67,8 +72,11 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
@@ -183,6 +191,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllowCors.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -197,7 +206,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TournamentController.cs" />
+    <Compile Include="Dtos\Class.cs" />
+    <Compile Include="Dtos\Court.cs" />
     <Compile Include="Dtos\CourtDto.cs" />
+    <Compile Include="Dtos\Match.cs" />
+    <Compile Include="Dtos\PlayingDate.cs" />
+    <Compile Include="Dtos\Tournament.cs" />
     <Compile Include="Dtos\TournamentDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -483,6 +497,10 @@
     <Compile Include="Migrations\202011141540215_forgeinKeysInMatchesModel.Designer.cs">
       <DependentUpon>202011141540215_forgeinKeysInMatchesModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012070913140_forgeinKeyRemoved.cs" />
+    <Compile Include="Migrations\202012070913140_forgeinKeyRemoved.Designer.cs">
+      <DependentUpon>202012070913140_forgeinKeyRemoved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Class.cs" />
@@ -495,6 +513,363 @@
     <Compile Include="Models\StartDateLowerThenEndDateValidation.cs" />
     <Compile Include="Models\Tournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankedinTestDb\Age.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\AgeGroup.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\AgeGroupMap.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\AgeGroupToSportMap.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\AllowedDate.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Challenge.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Chat.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ChatMessage.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ChatParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ClubLeague.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ClubLeagueAdmin.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ClubLeagueInvitation.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ClubLeagueParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ClubLeaguePool.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ClubLeagueToRankingLevel.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Country.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Currency.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\C__RefactorLog.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\database_firewall_rules.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\DivisionMatchSetting.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\DonationHistory.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Double.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\DrawMovement.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\DrawParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Entity.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\EventInitiator.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\EventParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\EventPoint.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\EventRole.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\EventStanding.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\EventToRankingPoint.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\EventType.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\FederationClub.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Image.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Language.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Match.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\MatchParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\MatchScore.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Organisation.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\OrganisationRanking.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\OrganizationAdmin.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Participant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ParticipantLicens.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ParticipantMap.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ParticipantStatistic.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ParticipantType.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Payment.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PersonalInfo.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Place.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Player.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PlayerAgeGroup.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PlayerNotification.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PlayerRacquet.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PlayerShoe.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PlayersImportQueue.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PlayingDatesSetting.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\PSATournamentDetail.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Racquet.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankedinDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RankedinDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankedinDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankedinDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RankedinDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingEvent.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingEventsForApproval.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingLevel.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingLevelPoint.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingPlayerAgeGroup.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingPoint.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingSetting.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RankingType.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RoundRobinMatchPointSetting.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RoundRobinRule.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RoundRobinRuleSetting.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\RoundRobinStanding.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ScandinavianStanding.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ScoreRule.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\ScoreRuleType.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Shoe.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\SponsorLogo.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Sport.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamAdmin.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamDetail.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeague.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueAdmin.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueDivision.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueDivisionDay.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueNonPlayingDate.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeaguePool.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueRankingLevel.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueRankingLevelPoint.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueRegion.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueTeam.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamLeagueTeamLineup.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamMatch.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamMatchMatch.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamMatchSetting.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamMatchTeam.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TeamParticipantType.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Tournament.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentAdmin.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentClassToRankingLevel.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentCourt.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentDraw.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentEvent.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentInvitation.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentMatch.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\TournamentPlayer.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\Translation.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\UserProfile.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\vEvent.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\vParticipant.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\webpages_FacebookCredentials.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\webpages_Membership.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\webpages_OAuthMembership.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\webpages_Roles.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankedinTestDb\webpages_UsersInRoles.cs">
+      <DependentUpon>RankedinDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Schedule.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\TournamentViewModel.cs" />
@@ -512,6 +887,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="RankedinTestDb\RankedinDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RankedinDB.edmx</DependentUpon>
+      <LastGenOutput>RankedinDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RankedinTestDb\RankedinDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RankedinDB.edmx</DependentUpon>
+      <LastGenOutput>RankedinDB.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -593,6 +978,13 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <EntityDeploy Include="RankedinTestDb\RankedinDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RankedinDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="RankedinTestDb\RankedinDB.edmx.diagram">
+      <DependentUpon>RankedinDB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -652,6 +1044,7 @@
     <Content Include="Views\Tournament\Times.cshtml" />
     <Content Include="Views\Tournament\Schedule.cshtml" />
     <Content Include="Views\Tournament\Schedule2.cshtml" />
+    <Content Include="Views\Tournament\TestDB.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -665,7 +1058,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
@@ -880,6 +1275,12 @@
     <EmbeddedResource Include="Migrations\202011141540215_forgeinKeysInMatchesModel.resx">
       <DependentUpon>202011141540215_forgeinKeysInMatchesModel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012070913140_forgeinKeyRemoved.resx">
+      <DependentUpon>202012070913140_forgeinKeyRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

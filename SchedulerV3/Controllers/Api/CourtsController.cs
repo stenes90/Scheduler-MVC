@@ -22,7 +22,7 @@ namespace SchedulerV3.Controllers.Api
 
         public IEnumerable<CourtDto> GetCourtsForTournament(int id)
         {
-            return _context.Courts.Where(c => c.Tournament.Id == id).ToList().Select(Mapper.Map<Court, CourtDto>);
+            return _context.Courts.Where(c => c.Tournament.Id == id).ToList().Select(Mapper.Map<Models.Court, CourtDto>);
         }
 
         [HttpDelete]
@@ -51,7 +51,7 @@ namespace SchedulerV3.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
             
-            courtInDb = Mapper.Map<CourtDto, Court>(court);
+            courtInDb = Mapper.Map<CourtDto, Models.Court>(court);
             courtInDb.Name = court.Name;
             _context.SaveChanges();
 

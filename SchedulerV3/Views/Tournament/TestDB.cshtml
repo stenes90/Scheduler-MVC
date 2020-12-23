@@ -1,0 +1,14 @@
+﻿@model List<SchedulerV3.Models.Tournament>
+@{
+    ViewBag.Title = "TestDB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TestDB</h2>
+
+
+@foreach (var item in Model)
+{
+    <p>@item.Name</p>
+}
+

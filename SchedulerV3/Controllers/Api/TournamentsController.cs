@@ -22,7 +22,7 @@ namespace SchedulerV3.Controllers.Api
         // GET /api/tournaments
         public IEnumerable<TournamentDto> GetTournaments()
         {
-            return _context.Tournaments.ToList().Select(Mapper.Map<Tournament, TournamentDto>);
+            return _context.Tournaments.ToList().Select(Mapper.Map<Models.Tournament, TournamentDto>);
         }
 
         [HttpDelete]

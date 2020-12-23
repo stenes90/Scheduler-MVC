@@ -12,10 +12,10 @@ namespace SchedulerV3.App_Start
     {
         public MappingProfile()
         {
-            Mapper.CreateMap<Tournament, TournamentDto>();
-            Mapper.CreateMap<TournamentDto, Tournament>();
-            Mapper.CreateMap<Court, CourtDto>();
-            Mapper.CreateMap<CourtDto, Court>();
+            Mapper.CreateMap<Models.Tournament, TournamentDto>();
+            Mapper.CreateMap<TournamentDto, Models.Tournament>();
+            Mapper.CreateMap<Models.Court, CourtDto>();
+            Mapper.CreateMap<CourtDto, Models.Court>();
 
 
         }

@@ -163,7 +163,7 @@
                         }
                         else
                         {
-                            var matchClassIndex = Model.Classes.IndexOf(match.Class);
+                            var matchClassIndex = Model.Classes.IndexOf(match.Classs);
                             var endTime = match.StartTime.AddMinutes(match.MatchDuration);
                             //var matchClassIndex = Model.Classes.ToList().IndexOf(match.Class);
 
@@ -184,9 +184,9 @@
                             ">
                                 <p style="padding: 0px; margin: 0px;">@match.StartTime.TimeOfDay</p>
                                 <p style="padding: 0px; margin: 0px;">@match.matchScheduleIndex</p>
-                                <p style="padding: 0px; margin: 0px;">@match.Class.Name</p>
+                                <p style="padding: 0px; margin: 0px;">@match.Classs.Name</p>
                                 <p style="padding: 0px; margin: 0px;">Rnd: @match.Round;</p>
-                                <p style="padding: 0px; margin: 0px;">Dur: @match.Class.MatchDuration</p>
+                                <p style="padding: 0px; margin: 0px;">Dur: @match.Classs.MatchDuration</p>
                             </div>
                         }
 

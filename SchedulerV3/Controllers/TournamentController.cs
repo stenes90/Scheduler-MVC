@@ -6,19 +6,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using Newtonsoft.Json;
+using Microsoft.Ajax.Utilities;
+using System.Web.Http.Cors;
+//using SchedulerV3.RankedinTestDb;
 
 namespace SchedulerV3.Controllers
 {
+    [AllowCors]
+    [EnableCors("https://localhost:44366", "*", "*")]
     public class TournamentController : Controller
     {
         private ApplicationDbContext _context;
+        private SchedulerV3.RankedinTestDb.rankedin_testEntities _rinDb;
         public TournamentController()
         {
             _context = new ApplicationDbContext();
+            _rinDb = new SchedulerV3.RankedinTestDb.rankedin_testEntities();
         }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
+            _rinDb.Dispose();
         }
 
         // GET: Tournament
@@ -237,17 +246,104 @@ namespace SchedulerV3.Controllers
             var viewModel = new TournamentViewModel();
             viewModel.Tournament = tn;
             viewModel.Classes = tn.Classes.ToList();
-
+            var data = Json(new { dataa = viewModel });
             return View("Schedule2", viewModel);
 
+
+        }
+        [HttpGet]
+        public ActionResult GetTnForSchedule(int id)
+        {
+            var tn = _context.Tournaments
+               .Include(c => c.Classes.Select(x => x.PlayingDates))
+               .SingleOrDefault(z => z.Id == id);
+
+            var tournament = new SchedulerV3.Dtos.Tournament();
+            foreach (var item in tn.Courts)
+            {
+                var court = new SchedulerV3.Dtos.Court();
+                court.Id = item.Id;
+                court.TournamentId = tn.Id;
+                court.Name = item.Name;
+                tournament.Courts.Add(court);
+            }
+            foreach (var item in tn.Classes)
+            {
+                var @class = new SchedulerV3.Dtos.Class();
+                @class.Id = item.Id;
+                @class.TournamentId = tn.Id;
+                @class.Name = item.Name;
+                foreach (var plDate in item.PlayingDates)
+                {
+                    var plDat = new Dtos.PlayingDate();
+                    plDat.Id = plDate.Id;
+                    plDat.Date = plDate.Date.ToString("yyyy-MM-ddTHH:mm:ss");
+                    plDat.StartTime = plDate.StartTime.ToString("yyyy-MM-ddTHH:mm:ss");
+                    plDat.EndTime = plDate.EndTime.ToString("yyyy-MM-ddTHH:mm:ss");
+                    plDat.TournamentId = tn.Id;
+                    @class.PlayingDates.Add(plDat);
+                }
+                tournament.Classes.Add(@class);
+            }
+            var _generator = new MatchGenerator();
+            var matches = _generator.GenerateMatches2(tn);
+            foreach (var item in matches)
+            {
+                var match = new SchedulerV3.Dtos.Match();
+                match.Id = item.Id;
+                match.ClassId = (int)item.ClassId;
+                match.TournamentId = tn.Id;
+                match.Round = item.Round;
+                tournament.Matches.Add(match);
+            }
+
+
+            
+
+
+            
+            tournament.StartDate = tn.StartDate.ToString("yyyy-MM-ddTHH:mm:ss");
+            tournament.EndDate = tn.EndDate.ToString("yyyy-MM-ddTHH:mm:ss");
+            //tournament = new Dtos.Tournament();
+            var check = Json(new { data = tournament }, JsonRequestBehavior.AllowGet);
+            return check;
+            //var json = JsonConvert.SerializeObject(tournament);
+            //return Json(json, JsonRequestBehavior.AllowGet);
+            //return Json(new { data = tournament });
+            //return View("Schedule2", viewModel);
+
+
+        }
+
+        [HttpGet]
+        public ActionResult GetMatches(JsonResult matches)
+        {
+            var tn = _context.Tournaments
+                .Include(c => c.Classes)
+                .SingleOrDefault(z => z.Id == 1038);
+
+            
+
+            var json = JsonConvert.SerializeObject(tn);
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        //[EnableCors(origins: "*", headers: "*", methods: "*")]
+        [DisableCors]
+        [HttpGet]
+        public void apicheck(Tournament tn)
+        {
+            var check = 0;
         }
 
 
         public ActionResult ScheduleMatches(Tournament tournament)
         {
-            var tn = _context.Tournaments
-                .Include(c => c.Classes.Select(x => x.PlayingDates))
-                .SingleOrDefault(z => z.Id == tournament.Id);
+            //var tn = _context.Tournaments
+            //    .Include(c => c.Classes.Select(x => x.PlayingDates))
+            //    .SingleOrDefault(z => z.Id == tournament.Id);
+
+            var tn = _context.Tournaments.Include(c => c.Classes).SingleOrDefault(z => z.Id == tournament.Id);
 
             var schedule = new Schedule();
 
@@ -350,6 +446,15 @@ namespace SchedulerV3.Controllers
             return View("Schedule2", viewModel);
         }
 
+
+        public ActionResult TestDB()
+        {
+
+            var check = _rinDb.Tournaments.Take(10).Select(c => new Tournament { Name = c.t_name }).ToList();
+
+
+            return View(check);
+        }
 
 
     }

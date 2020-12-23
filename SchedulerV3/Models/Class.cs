@@ -1,9 +1,11 @@
 ﻿namespace SchedulerV3.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+    using System.Runtime.Serialization;
+
     public class Class
     {
         public Class()
@@ -35,8 +37,12 @@
         [Display(Name = "Break between matches")]
         public int BreakBetweenMatches { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<DateTime> ListOfPlayingDates { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<PlayingDate> PlayingDates { get; set; }
 
         

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6d174316cd9e4cd4bd0a171c586f4b43" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="RankedinContext.ClubLeague" Width="1.5" PointX="3.75" PointY="90" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ClubLeagueAdmin" Width="1.5" PointX="9" PointY="96.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ClubLeagueInvitation" Width="1.5" PointX="12" PointY="96.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ClubLeagueParticipant" Width="1.5" PointX="12" PointY="100.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ClubLeaguePool" Width="1.5" PointX="6" PointY="103.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ScandinavianStanding" Width="1.5" PointX="14.25" PointY="95.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.C__RefactorLog" Width="1.5" PointX="1.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Age" Width="1.5" PointX="3.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.AgeGroupMap" Width="1.5" PointX="5.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.AgeGroup" Width="1.5" PointX="6.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.AgeGroupToSportMap" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.AllowedDate" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Challenge" Width="1.5" PointX="17" PointY="93.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Chat" Width="1.5" PointX="14.75" PointY="103.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ChatMessage" Width="1.5" PointX="17" PointY="103.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ChatParticipant" Width="1.5" PointX="25.25" PointY="100.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Country" Width="1.5" PointX="3" PointY="72.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Currency" Width="1.5" PointX="0.75" PointY="73" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.DonationHistory" Width="1.5" PointX="22.25" PointY="96.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.EventInitiator" Width="1.5" PointX="25.25" PointY="93" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.EventRole" Width="1.5" PointX="6.75" PointY="111" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.EventType" Width="1.5" PointX="25.25" PointY="120.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Image" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Language" Width="1.5" PointX="5.25" PointY="68.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Match" Width="1.5" PointX="6.75" PointY="90.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ParticipantType" Width="1.5" PointX="2.25" PointY="85.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Payment" Width="1.5" PointX="1.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PersonalInfo" Width="1.5" PointX="9.75" PointY="92" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Place" Width="1.5" PointX="5.25" PointY="72" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Player" Width="1.5" PointX="20" PointY="93.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PlayerNotification" Width="1.5" PointX="22.25" PointY="103.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PlayerRacquet" Width="1.5" PointX="28.25" PointY="97.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PlayerShoe" Width="1.5" PointX="28.25" PointY="93.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PlayersImportQueue" Width="1.5" PointX="3.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Racquet" Width="1.5" PointX="26" PointY="117.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingType" Width="1.5" PointX="4.5" PointY="85.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RoundRobinMatchPointSetting" Width="1.5" PointX="15" PointY="99.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RoundRobinRule" Width="1.5" PointX="3.75" PointY="82" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RoundRobinRuleSetting" Width="1.5" PointX="6" PointY="81.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RoundRobinStanding" Width="1.5" PointX="8.25" PointY="105.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ScoreRule" Width="1.5" PointX="6.75" PointY="86.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ScoreRuleType" Width="1.5" PointX="4.5" PointY="78.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Shoe" Width="1.5" PointX="26" PointY="114.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.SponsorLogo" Width="1.5" PointX="6.75" PointY="98.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Sport" Width="1.5" PointX="1.5" PointY="92.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Translation" Width="1.5" PointX="9.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.UserProfile" Width="1.5" PointX="17.75" PointY="97.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.webpages_FacebookCredentials" Width="1.5" PointX="9.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.webpages_Membership" Width="1.5" PointX="9.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.webpages_OAuthMembership" Width="1.5" PointX="5.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.webpages_Roles" Width="1.5" PointX="11.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.webpages_UsersInRoles" Width="1.5" PointX="11.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.MatchParticipant" Width="1.5" PointX="18" PointY="88" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.MatchScore" Width="1.5" PointX="9" PointY="101.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.FederationClub" Width="1.5" PointX="9.75" PointY="72.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Organisation" Width="1.5" PointX="7.5" PointY="70.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.OrganizationAdmin" Width="1.5" PointX="25.25" PointY="104" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Double" Width="1.5" PointX="22.25" PointY="116.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.EventParticipant" Width="1.5" PointX="6" PointY="114.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ParticipantLicens" Width="1.5" PointX="18" PointY="76" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ParticipantMap" Width="1.5" PointX="42.25" PointY="88" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Participant" Width="1.5" PointX="12.75" PointY="78" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ParticipantStatistic" Width="1.5" PointX="15" PointY="78.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamDetail" Width="1.5" PointX="32.5" PointY="103.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.ClubLeagueToRankingLevel" Width="1.5" PointX="14.25" PointY="92.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.EventPoint" Width="1.5" PointX="27.5" PointY="101.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.EventStanding" Width="1.5" PointX="24.5" PointY="107.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.EventToRankingPoint" Width="1.5" PointX="30.75" PointY="93" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.OrganisationRanking" Width="1.5" PointX="9.75" PointY="85" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingEvent" Width="1.5" PointX="32.5" PointY="96" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingLevelPoint" Width="1.5" PointX="14.25" PointY="85.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingLevel" Width="1.5" PointX="12" PointY="84.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingParticipant" Width="1.5" PointX="15" PointY="88.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingPoint" Width="1.5" PointX="17.25" PointY="83.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingSetting" Width="1.5" PointX="11.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentClassToRankingLevel" Width="1.5" PointX="29.75" PointY="81.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Entity" Width="1.5" PointX="11.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.DivisionMatchSetting" Width="1.5" PointX="34.75" PointY="107.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamAdmin" Width="1.5" PointX="15" PointY="75.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueAdmin" Width="1.5" PointX="25.25" PointY="89.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueDivisionDay" Width="1.5" PointX="34.75" PointY="110.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueDivision" Width="1.5" PointX="32.5" PointY="108.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueNonPlayingDate" Width="1.5" PointX="32.5" PointY="113.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeaguePool" Width="1.5" PointX="37.75" PointY="111.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueRankingLevelPoint" Width="1.5" PointX="34.75" PointY="100.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueRankingLevel" Width="1.5" PointX="12" PointY="92.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueRegion" Width="1.5" PointX="32.5" PointY="115.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeague" Width="1.5" PointX="30.25" PointY="101.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueTeamLineup" Width="1.5" PointX="37" PointY="107.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamLeagueTeam" Width="1.5" PointX="40" PointY="102" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamMatch" Width="1.5" PointX="40" PointY="110.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamMatchMatch" Width="1.5" PointX="25.25" PointY="96.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamMatchTeam" Width="1.5" PointX="42.25" PointY="111.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamParticipant" Width="1.5" PointX="42.25" PointY="98.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamParticipantType" Width="1.5" PointX="40" PointY="98.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.DrawMovement" Width="1.5" PointX="29" PointY="77.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.DrawParticipant" Width="1.5" PointX="32" PointY="77.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PlayingDatesSetting" Width="1.5" PointX="1.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PSATournamentDetail" Width="1.5" PointX="24.5" PointY="80.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TeamMatchSetting" Width="1.5" PointX="26.75" PointY="73.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.Tournament" Width="1.5" PointX="22.25" PointY="81.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentAdmin" Width="1.5" PointX="28.25" PointY="89.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentCourt" Width="1.5" PointX="27.5" PointY="84.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentDraw" Width="1.5" PointX="26.75" PointY="76.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentEvent" Width="1.5" PointX="24.5" PointY="72.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentInvitation" Width="1.5" PointX="24.5" PointY="85.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentMatch" Width="1.5" PointX="22.25" PointY="91" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.TournamentPlayer" Width="1.5" PointX="29.75" PointY="73" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.PlayerAgeGroup" Width="1.5" PointX="13.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingPlayerAgeGroup" Width="1.5" PointX="1.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.vEvent" Width="1.5" PointX="3.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.vParticipant" Width="1.5" PointX="13.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.RankingEventsForApproval" Width="1.5" PointX="5.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RankedinContext.database_firewall_rules" Width="1.5" PointX="7.5" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="RankedinContext.FK__ClubLeagu__ClubL__025D5595" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__ClubLeagu__ClubL__7E8CC4B1" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Scandinav__Clubl__07220AB2" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_CL_SPORTS" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeague_Places" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeague_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeague_SeedRankingId_OrganisationRankings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeagueParticipants_ClubLeagueId_ClubLeague" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeaguePools_ClubLeague" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeagueToRankingLevel_ClubLeagueId_ClubLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinMatchPointSettings_ClubLeagueId_ClubLeauge_lad_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinRuleSettings_ClubLeagueId_ClubLeauge_lad_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__ClubLeagu__Playe__7C3A67EB" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__ClubLeagu__RoleI__00750D23" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__ClubLeagu__Doubl__7D2E8C24" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__ClubLeagu__Playe__7E22B05D" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Scandinav__Parti__062DE679" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeagueParticipants_ParticipantId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinStandings_ClubLeaguePoolId_ClubLeaugePools" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_AllowedDates_PlayingDatesSettings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Challenge__ChatI__41D8BC2C" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_CHALLENGE_MATCH" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatchMatches_ChallengeId_Challenges" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentMatches_Challenges" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Correspon__Corre__51BA1E3A" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Correspon__Corre__52AE4273" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Correspon__Playe__673F4B05" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Languages__Count__58671BC9" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__PersonalI__pi_co__5C37ACAD" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Places__mp_count__5E1FF51F" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Countries_CurrencyId_Currencies" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Participant_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_SponsorLogos_Countries" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagues_CountryId_Countries" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_DonationHistory_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventInitiators_PlayerId_Player_p_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventInitiators_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__TeamLeagu__RoleI__3FF073BA" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__RoleI__5EDF0F2E" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventPoints_EventTypeId_EventTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventStandings_EventTypeId_EventTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Match_CancelledMatchParticipantId_MatchParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Matches_Places" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_MATCHES_SPORTS" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_MatchParticipants_MatchId_Match_m_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_MatchScores_Matches" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Participant_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingParticipants_ParticipantTypeId_ParticipantTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingTypes_ParticipantTypeId_ParticipantTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__PersonalI__pi_fa__5D2BD0E6" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Player_PersonalInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__Place__5B0E7E4A" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Orgs_Places" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatches_PlaceId_Places" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentCourts_Places" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Organizat__Playe__000AF8CF" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Player__HomeClub__6DEC4894" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__PlayerRac__Playe__74994623" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__PlayerSho__Playe__758D6A5C" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__TeamLeagu__Playe__3EFC4F81" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__Playe__7869D707" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__Recie__7A521F79" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__Sende__795DFB40" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Doubles_Player1" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Doubles_Player2" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventPoints_PlayerId_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventStandings_PlayerId_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_MatchParticipants_PlayerId_Player_p_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Player_ParticipantId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Player_UserProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_PlayerNotifications_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinStandings_PlayerId_Player_p_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagues_InitiatorId_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueTeams_InitiatorId_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatchMatches_ResultInitiatorId_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamParticipants_PlayerId_Player_p_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Tournament_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__PlayerRac__Racqu__63D8CE75" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__PlayerSho__ShoeI__65C116E7" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventPoints_MatchTypeId_RankingTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventStandings_MatchTypeId_RankingTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingParticipants_MatchTypeId_RankingTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ScoreRules_RankingType" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinMatchPointSettings_TeamLeagueId_TeamLeague" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinMatchPointSettings_TournamentClassId_TournamentEvent_te_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinMatchPointSettings_TournamentId_Tournament" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinRuleSettings_RuleId_RoundRobinRules" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinRuleSettings_TeamLeagueId_TeamLeague" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinRuleSettings_TournamentClassId_TournamentEvent_te_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinRuleSettings_TournamentId_Tournament" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinStandings_DoubleId_Doubles" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinStandings_EventParticipantId_EventParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinStandings_TeamId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinStandings_TeamLeaguePoolId_TeamLeaguePools" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RoundRobinStandings_TournamentDrawId_TournamentDraw_td_id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ScoreRules_ScoreRuleType" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ScoreRules_Sport" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_SponsorLogos_Sports" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_OrganisationRankings_SportId_Sports" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagues_SportId_Sports" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TOURNAMENT_SPORTS" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_MatchParticipants_DoubleId_Doubles" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_MatchParticipants_EventParticipantId_EventParticipant_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_FederationClubs_ClubId_Organisations" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_FederationClubs_FederationId_Organisations" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Organizat__Organ__0DCF0841" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_OrganisationRankings_OrganisationId_Organisations" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ParticipantLicenses_OrganisationId_Organisations" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamDetails_HomeClubId_Organisations" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueTeams_HomeClubId_Organisations" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventPoints_DoubleId_Doubles" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventStandings_DoubleId_Doubles" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.DrawParticipants_EventParticipantId_EventParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventParticipant_Participant" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventPoints_EventParticipantId_EventParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventStandings_EventParticipantId_EventParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatchTeams_EventParticipantId_EventParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ParticipantLicenses_ParticipantId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ParticipantMap_DetailId_Participant" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ParticipantMap_MasterId_Participant" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ParticipantMap_TeamParticipantTypeId_TeamParticipantTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ParticipantStatistics_ParticipantId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingParticipants_ParticipantId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamAdmins_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamAdmins_TeamLeagueTeamId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamDetails_InitiatorId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamDetails_ParticipantId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatches_WinnerTeamId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatchTeams_TeamLeagueTeamId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentPlayers_ParticipantId_Participants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamDetails_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamDetails_TeamLeaguePoolId_TeamLeaguePools" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_ClubLeagueToRankingLevel_RankingLevelId_RankingLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventPoints_RankingId_OrganisationRankings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventToRankingPoints_EventPointId_EventPoints" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_EventToRankingPoints_RankingPointId_RankingPoints" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_OrganisationEvents_OrganisationRankingId_OrganisationRankings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingLevels_OrganisationRankingId_OrganisationRankings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingParticipants_OrganisationRankingId_OrganisationRankings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueLevels_OrganisationRankingId_OrganisationRankings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_Tournament_SeedRankingId_OrganisationRankings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_OrganisationEvents_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingLevelPoints_RankingLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentClassToRankingLevel_RankingLevelId_RankingLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_RankingPoints_RankingParticipantId_RankingParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentClassToRankingLevel_TournamentClassId_TournamentClasses" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_DivisionMatchSettings_DivisionId_Divisions" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueTeamLineups_DivisionMatchSettingsId_DivisionMatchSettings" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__TeamLeagu__TeamL__40E497F3" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueDivisionDays_TeamLeagueDivisionId_TeamLeagueLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueDivisions_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeaguePools_TeamLeagueDivisionId_Divisions" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueRankingLevelPoints_LevelId_TeamLeagueDivisions" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueNonPlayingDates_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeaguePools_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeaguePools_TeamLeagueRegionId_Regions" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueTeams_TeamLeaguePoolId_TeamLeaguePools" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatches_TeamLeaguePoolId_TeamLeaguePools" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueRankingLevelPoints_RankingLevelId_TeamLeagueRankingLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueRegions_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueTeams_TeamLeagueId_TeamLeagues" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueTeamLineups_TeamLeagueTeamId_TeamLeagueTeams" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamLeagueTeamLineups_TeamMatchId_TeamParticipants" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamParticipants_TeamLeagueTeamId_TeamLeagueTeams" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatchMatches_TeamMatchId_TeamMatches" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatchTeams_TeamMatchId_TeamMatches" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamParticipants_TeamParticipantTypeId_TeamParticipantTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.DrawMovements_FromDrawId_TournamentDraw" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.DrawMovements_ToDrawId_TournamentDraw" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.DrawParticipants_DrawId_TournamentDraw" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_PSATournamentDetails_Tournament" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TeamMatchSettings_TournamentClassId_TournamentEvent" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__Tourn__60C757A0" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__Tourn__658C0CBD" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentCourts_Tournament" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentEvent_Tournament" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentMatches_TournamentCourts" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentDraw_TournamentDraw" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentMatches_TournamentDraw" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK__Tournamen__Tourn__68687968" ManuallyRouted="false" />
+        <AssociationConnector Association="RankedinContext.FK_TournamentPlayers_TournamentEvent" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

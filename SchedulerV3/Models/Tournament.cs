@@ -1,8 +1,10 @@
 ﻿namespace SchedulerV3.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Runtime.Serialization;
 
     public class Tournament
     {
@@ -12,6 +14,7 @@
             Courts = new HashSet<Court>();
             PlayingDates = new List<PlayingDate>();
             Matches = new HashSet<Match>();
+            Classes = new HashSet<Class>();
         }
 
         public int Id { get; set; }
@@ -26,7 +29,8 @@
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
-
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<Class> Classes { get; set; }
 
         public virtual ICollection<Court> Courts { get; set; }

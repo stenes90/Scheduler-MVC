@@ -53,9 +53,9 @@ namespace SchedulerV3.Models
                 notScheduledMatches = matches.Where(c => c.IsScheduled == false).ToList();
                 var listOfCourts = actualDate.Courts.ToList();
                 var endTime = actualDate.EndTime;
-                var classesForDate = actualDate.Classes;
-                var matchesForDate = matches.Where(c => c.Class.PlayingDates.Contains(actualDate)).ToList()
-                    .Where(x => x.IsScheduled == false).ToList();
+                //var classesForDate = actualDate.Classes;
+                //var matchesForDate = matches.Where(c => c.Class.PlayingDates.Contains(actualDate)).ToList()
+                 //   .Where(x => x.IsScheduled == false).ToList();
 
                 var matchIndex = 0;
                 foreach (var match in notScheduledMatches)
@@ -67,8 +67,8 @@ namespace SchedulerV3.Models
                     {
                         var lastScheduledMatchFromSameClassForPreviousRound =
                         listOfScheduledMatches.Where(c => c.Round == (match.Round - 1))
-                        .Where(x => x.Class == (match.Class)).Where(z =>z.PlayingDate == actualDate).ToList().Last();
-                        nextAvailableTimeForClassMatch = lastScheduledMatchFromSameClassForPreviousRound.EndTime.AddMinutes(match.Class.BreakBetweenMatches);
+                        .Where(x => x.Classs == (match.Classs)).Where(z =>z.PlayingDate == actualDate).ToList().Last();
+                        nextAvailableTimeForClassMatch = lastScheduledMatchFromSameClassForPreviousRound.EndTime.AddMinutes(match.Classs.BreakBetweenMatches);
                     }
                     catch (Exception)
                     {
@@ -163,8 +163,8 @@ namespace SchedulerV3.Models
                     match.Date = actualDate.Date;
                     actualDate.Matches.Add(match);
                     match.StartTime = smallestDate;
-                    match.EndTime = match.StartTime.AddMinutes(match.Class.MatchDuration);
-                    match.MatchDuration = match.Class.MatchDuration;
+                    match.EndTime = match.StartTime.AddMinutes(match.Classs.MatchDuration);
+                    match.MatchDuration = match.Classs.MatchDuration;
                     match.IsScheduled = true;
                     match.Tournament = tournament;
                     

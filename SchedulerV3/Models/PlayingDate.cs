@@ -1,9 +1,11 @@
 ﻿namespace SchedulerV3.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
 
     public class PlayingDate
     {
@@ -27,12 +29,20 @@
 
         public List<int> CourtIds { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual Tournament Tournament { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<Court> Courts { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<Class> Classes { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual List<Match> Matches { get; set; }
 
 
